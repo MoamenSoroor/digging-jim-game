@@ -148,6 +148,11 @@ Entity.prototype.isMovingY = function()
 var Player  = function (x, y)
 {
     Entity.call(this,x,y,"player",AssetsType.character);
+
+    // this.keysUp = ["","",""];
+    // this.keysDown = ["","",""];
+    // this.keyLeft = ["","",""];
+    // this.keysRight= ["","",""];
 }
 
 Player.prototype = Object.create(Entity.prototype);

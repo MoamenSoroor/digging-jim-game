@@ -44,6 +44,7 @@ World.prototype.start = function()
 // pass direction ex:  Direction.UP 
 World.prototype.movePlayer = function(direction)
 {
+
   if(!this.player.isMovingX() && !this.player.isMovingY())
   {
     var tile = null;

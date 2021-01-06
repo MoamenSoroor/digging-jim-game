@@ -66,7 +66,7 @@ var dom = {
 }
 
 
-var ui =  
+const ui =  
 {
     positionToPixels: function (tile)
     {

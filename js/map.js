@@ -33,17 +33,20 @@ WorldMap.prototype.drawWorldMap = function ()
             break;
             case AssetsType.character: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
+                this.map[i][j] = AssetsType.background;
                 this.player = new Player(j,i);
                 this.player.drawEntity();
             break;
             case AssetsType.rock: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
+                this.map[i][j] = AssetsType.background;
                 var rock = new Rock(j,i);
                 rock.drawEntity();
                 this.rocks.push(rock);
             break;
             case AssetsType.diamond: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
+                this.map[i][j] = AssetsType.background;
                 var diamond = new Diamond(j,i);
                 diamond.drawEntity();
                 this.diamonds.push(diamond);
@@ -71,8 +74,6 @@ WorldMap.prototype.updateTileTo = function(xpos,ypos,tileType,duration)
     if(duration != undefined && duration != null)
     {
       var self = this;
-      var counter = 0;
-      var max = duration/25;
       setTimeout(() => {
         var tile = new Tile(xpos,ypos,tileType); 
         self.map[ypos][xpos] = tile.tileType;
