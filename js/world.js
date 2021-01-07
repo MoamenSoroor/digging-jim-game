@@ -10,6 +10,8 @@ var World = function (map)
 {
   this.worldMap = new WorldMap(map);
   this.score = 0;
+  this.width = this.worldMap.width;
+  this.height = this.worldMap.height;
   this.player = null;
   this.entityManager = null;
   this.controls = controls;
@@ -36,6 +38,7 @@ World.prototype.start = function()
   var self = this;
   this.worldMap.drawWorldMap(this);
   this.player = this.worldMap.player;
+  this.entityManager.initEntityManager();
   
 
   this.controls.onKeyUp = function () {
@@ -85,6 +88,14 @@ World.prototype.onFail = function ()
 {
   
 }
+
+World.prototype.onEatDiamond = function(value)
+{
+  console.log("diamond has been eaten");
+  console.log(value);
+  this.score+= value;
+  
+} 
 
 
 

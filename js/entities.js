@@ -44,6 +44,11 @@ Entity.prototype.drawEntity  = function (){
     dom.addImage(this.image.domImage);
 }
 
+Entity.prototype.removeEntity  = function (){
+    dom.removeImage(this.image.domImage);
+}
+
+
 Entity.prototype.onMoveFinish  = function (){
     // check direcion 
 }
@@ -280,70 +285,99 @@ Player.prototype.moveRight = function(onFinish)
 // rock
 
 
-var Rock  = function (world, x, y)
+var FallingEntity = function(world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight) 
 {
-    Entity.call(this,world,x,y,"rock" + x + "-" + y,AssetsType.rock);
+    Entity.call(this,world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight);
+
+
+
 }
 
-Rock.prototype = Object.create(Entity.prototype);
+FallingEntity.prototype = Object.create(Entity.prototype);
+
+FallingEntity.prototype.constructor = FallingEntity.constructor;
+
+
+
+
+FallingEntity.prototype.isDownBackground = function(){
+    return this.world.worldMap.checkTileType(this.xpos, this.ypos + 1);
+}
+
+FallingEntity.prototype.moveDown = function()
+{
+
+    if(this.isMovingY())
+        return;
+
+    
+    var tile = this.world.worldMap.getTile(this.xpos, this.ypos + 1);
+    switch(tile.tileType)
+    {
+      case AssetsType.background:
+        Entity.prototype.moveDown.call(this,1);
+      break;
+    }
+}
+
+
+
+
+
+FallingEntity.prototype.moveLeft = function()
+{
+
+    if(this.isMovingX())
+        return;
+
+    
+    var tile = this.world.worldMap.getTile(this.xpos - 1, this.ypos);
+    switch(tile.tileType)
+    {
+      case AssetsType.background:
+        Entity.prototype.moveLeft.call(this,1);
+      break;
+    }
+}
+
+
+FallingEntity.prototype.moveRight = function()
+{
+
+    if(this.isMovingX())
+        return;
+
+    
+    var tile = this.world.worldMap.getTile(this.xpos +1 , this.ypos);
+    switch(tile.tileType)
+    {
+      case AssetsType.background:
+        Entity.prototype.moveRight.call(this,1);
+      break;
+    }
+}
+
+
+
+
+var Rock  = function (world, x, y)
+{
+    FallingEntity.call(this,world,x,y,"rock" + x + "-" + y,AssetsType.rock);
+}
+
+Rock.prototype = Object.create(FallingEntity.prototype);
 
 Rock.prototype.constructor = Rock.constructor;
 
 
 
-Rock.prototype.moveUp = function(dy)
-{
-    Entity.prototype.moveUp.call(this,dy);
-
-}
-
-Rock.prototype.moveDown = function(dy)
-{
-    Entity.prototype.moveDown.call(this,dy);
-}
-
-Rock.prototype.moveLeft = function(dx)
-{
-    Entity.prototype.moveLeft.call(this,dx);
-}
-
-Rock.prototype.moveRight = function(dx)
-{
-    Entity.prototype.moveRight.call(this,dx);
-}
-
-
-
-
 var Diamond  = function (world, x, y)
 {
-    Entity.call(this,world,x,y,"diamond" + x + "-" + y,AssetsType.diamond);
+    FallingEntity.call(this,world,x,y,"diamond" + x + "-" + y,AssetsType.diamond);
+    this.diamondValue = 1;
 }
 
-Diamond.prototype = Object.create(Entity.prototype);
+Diamond.prototype = Object.create(FallingEntity.prototype);
 
 Diamond.prototype.constructor = Diamond.constructor;
 
-
-
-
-Diamond.prototype.moveUp = function(dy)
-{
-    Entity.prototype.moveUp.call(this,dy);
-
-}
-
-Diamond.prototype.moveDown = function(dy)
-{
-    Entity.prototype.moveDown.call(this,dy);
-}
-
-Diamond.prototype.moveLeft = function(dx)
-{
-    Entity.prototype.moveLeft.call(this,dx);
-}
-
-Diamond.prototype.moveRight = function(dx)
-{
-    Entity.prototype.moveRight.call(this,dx);
-}

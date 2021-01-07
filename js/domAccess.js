@@ -60,6 +60,9 @@ var dom = {
 
     getImage: function(id){
         return document.getElementById(id);
+    },
+    removeImage: function(im) {
+        document.body.removeChild(im);
     }
 
 

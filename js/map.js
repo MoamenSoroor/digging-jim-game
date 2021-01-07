@@ -109,7 +109,7 @@ WorldMap.prototype.updateTileTo = function(xpos,ypos,tileType,duration)
 
 WorldMap.prototype.checkTileType = function(xpos,ypos,tileType)
 {
-  return this.getTile(xpos,ypos,).tileType == tileType;
+  return this.getTile(xpos,ypos).tileType == tileType;
 }
 
 
