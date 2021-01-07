@@ -2,8 +2,9 @@
 
 
 
-var Entity = function (x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight)
+var Entity = function (world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight)
 {
+    this.world = world;
     this.xpos = x;
     this.ypos = y;
     this.id = id;
@@ -82,6 +83,8 @@ Entity.prototype.updateAsset = function(assetType)
 
 Entity.prototype.moveUp = function(dy,onFinish)
 {
+    if(dy == undefined || dy == null )
+        dy = 1;
     if(!this.isMovingY())
     {
         this.direction = Direction.UP;
@@ -97,7 +100,8 @@ Entity.prototype.moveUp = function(dy,onFinish)
 Entity.prototype.moveDown = function(dy,onFinish)
 {
     
-
+    if(dy == undefined || dy == null )
+        dy = 1;
     if(!this.isMovingY())
     {
         this.direction = Direction.DOWN;
@@ -109,7 +113,8 @@ Entity.prototype.moveDown = function(dy,onFinish)
 
 Entity.prototype.moveLeft = function(dx,onFinish)
 {
-    
+    if(dx == undefined || dx == null )
+        dx = 1;
     if(!this.isMovingX())
     {
         this.direction = Direction.LEFT;
@@ -121,7 +126,8 @@ Entity.prototype.moveLeft = function(dx,onFinish)
 
 Entity.prototype.moveRight = function(dx,onFinish)
 {
-    
+    if(dx == undefined || dx == null )
+        dx = 1;
     if(!this.isMovingX())
     {
         this.direction = Direction.RIGHT;
@@ -145,9 +151,9 @@ Entity.prototype.isMovingY = function()
 
 
 
-var Player  = function (x, y)
+var Player  = function (world, x, y)
 {
-    Entity.call(this,x,y,"player",AssetsType.character);
+    Entity.call(this,world,x,y,"player",AssetsType.character);
 
     // this.keysUp = ["","",""];
     // this.keysDown = ["","",""];
@@ -161,40 +167,122 @@ Player.prototype.constructor = Player.constructor;
 
 
 
-Player.prototype.moveUp = function(onFinish)
-{
-    Entity.prototype.moveUp.call(this,1,onFinish);
-
-}
-
 Player.prototype.moveToDirection = function(direction,onFinish)
 {
-    Entity.prototype.moveToDirection.call(this,direction,1,onFinish);
+    //Entity.prototype.moveToDirection.call(this,direction,1,onFinish);
+
+    switch(direction)
+    {
+      case Direction.UP:
+        this.moveUp(onFinish);
+      break;
+      case Direction.DOWN:
+        this.moveDown(onFinish);
+        
+      break;
+      case Direction.LEFT:
+        this.moveLeft(onFinish);
+      break;
+      case Direction.RIGHT:
+        this.moveRight(onFinish);
+      break;
+  
+      default: 
+        throw new Error("Not Valid Direction");
+      break;
+    }
+}
+
+
+Player.prototype.moveUp = function(onFinish)
+{
+    if(this.direction == Direction.None) this.direction = Direction.UP;
+
+    if(this.isMovingY() && (Direction.UP || Direction.DOWN))
+        return;
+
+    
+    var tile = this.world.worldMap.getTile(this.xpos, this.ypos - 1);
+    switch(tile.tileType)
+    {
+      case AssetsType.background:
+        Entity.prototype.moveUp.call(this,1,onFinish);
+      break;
+      case AssetsType.dirt:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);    
+        Entity.prototype.moveUp.call(this,1,onFinish);   
+      break;
+    }
 
 }
+
 
 Player.prototype.moveDown = function(onFinish)
 {
-    Entity.prototype.moveDown.call(this,1,onFinish);
+    if(this.direction == Direction.None) this.direction = Direction.DOWN;
+
+    if(this.isMovingY() && (Direction.UP || Direction.DOWN))
+        return;
+
+    
+    var tile = this.world.worldMap.getTile(this.xpos, this.ypos + 1);
+    switch(tile.tileType)
+    {
+      case AssetsType.background:
+        Entity.prototype.moveDown.call(this,1,onFinish);
+      break;
+      case AssetsType.dirt:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);     
+        Entity.prototype.moveDown.call(this,1,onFinish);  
+      break;
+    }
 }
 
 Player.prototype.moveLeft = function(onFinish)
 {
-    Entity.prototype.moveLeft.call(this,1,onFinish);
+    if(this.isMovingX() && (Direction.LEFT || Direction.RIGHT))
+        return;
+    if(this.direction == Direction.None) this.direction = Direction.LEFT;
+    
+    var tile = this.world.worldMap.getTile(this.xpos - 1, this.ypos );
+    switch(tile.tileType)
+    {
+      case AssetsType.background:
+        Entity.prototype.moveLeft.call(this,1,onFinish);
+      break;
+      case AssetsType.dirt:
+          this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);       
+          Entity.prototype.moveLeft.call(this,1,onFinish);
+      break;
+    }
 }
 
 Player.prototype.moveRight = function(onFinish)
 {
-    Entity.prototype.moveRight.call(this,1,onFinish);
+    if(this.direction == Direction.None) this.direction = Direction.RIGHT;
+    if(this.isMovingX() && (Direction.LEFT || Direction.RIGHT))
+        return;
+    
+    var tile = this.world.worldMap.getTile(this.xpos + 1, this.ypos );
+    switch(tile.tileType)
+    {
+      case AssetsType.background:
+        Entity.prototype.moveRight.call(this,1,onFinish);
+      break;
+      case AssetsType.dirt:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);      
+        Entity.prototype.moveRight.call(this,1,onFinish); 
+      break;
+    }
 }
 
 
 // rock
 
 
-var Rock  = function (x, y)
+var Rock  = function (world, x, y)
 {
-    Entity.call(this,x,y,"rock" + x + "-" + y,AssetsType.rock);
+    Entity.call(this,world,x,y,"rock" + x + "-" + y,AssetsType.rock);
 }
 
 Rock.prototype = Object.create(Entity.prototype);
@@ -203,33 +291,33 @@ Rock.prototype.constructor = Rock.constructor;
 
 
 
-Rock.prototype.moveUp = function()
+Rock.prototype.moveUp = function(dy)
 {
-    Entity.prototype.moveUp.call(this,1);
+    Entity.prototype.moveUp.call(this,dy);
 
 }
 
-Rock.prototype.moveDown = function()
+Rock.prototype.moveDown = function(dy)
 {
-    Entity.prototype.moveDown.call(this,1);
+    Entity.prototype.moveDown.call(this,dy);
 }
 
-Rock.prototype.moveLeft = function()
+Rock.prototype.moveLeft = function(dx)
 {
-    Entity.prototype.moveLeft.call(this,1);
+    Entity.prototype.moveLeft.call(this,dx);
 }
 
-Rock.prototype.moveRight = function()
+Rock.prototype.moveRight = function(dx)
 {
-    Entity.prototype.moveRight.call(this,1);
+    Entity.prototype.moveRight.call(this,dx);
 }
 
 
 
 
-var Diamond  = function (x, y)
+var Diamond  = function (world, x, y)
 {
-    Entity.call(this,x,y,"diamond" + x + "-" + y,AssetsType.diamond);
+    Entity.call(this,world,x,y,"diamond" + x + "-" + y,AssetsType.diamond);
 }
 
 Diamond.prototype = Object.create(Entity.prototype);
@@ -238,25 +326,24 @@ Diamond.prototype.constructor = Diamond.constructor;
 
 
 
-Diamond.prototype.moveUp = function()
+
+Diamond.prototype.moveUp = function(dy)
 {
-    Entity.prototype.moveUp.call(this,1);
+    Entity.prototype.moveUp.call(this,dy);
 
 }
 
-Diamond.prototype.moveDown = function()
+Diamond.prototype.moveDown = function(dy)
 {
-    Entity.prototype.moveDown.call(this,1);
+    Entity.prototype.moveDown.call(this,dy);
 }
 
-Diamond.prototype.moveLeft = function()
+Diamond.prototype.moveLeft = function(dx)
 {
-    Entity.prototype.moveLeft.call(this,1);
+    Entity.prototype.moveLeft.call(this,dx);
 }
 
-Diamond.prototype.moveRight = function()
+Diamond.prototype.moveRight = function(dx)
 {
-    Entity.prototype.moveRight.call(this,1);
+    Entity.prototype.moveRight.call(this,dx);
 }
-
-

@@ -4,15 +4,11 @@
    this.map = map1;
    this.width = map1[0].length;
    this.height = map1.length;
-   this.player = null;
-   this.diamonds = [];
-   this.rocks = [];
-
  }
 
 
 
-WorldMap.prototype.drawWorldMap = function ()
+WorldMap.prototype.drawWorldMap = function (world)
 {
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
@@ -34,22 +30,23 @@ WorldMap.prototype.drawWorldMap = function ()
             case AssetsType.character: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
                 this.map[i][j] = AssetsType.background;
-                this.player = new Player(j,i);
+                this.player = new Player(world,j,i);
                 this.player.drawEntity();
+                world.entityManager.setPlayer(this.player);
             break;
             case AssetsType.rock: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
                 this.map[i][j] = AssetsType.background;
-                var rock = new Rock(j,i);
+                var rock = new Rock(world,j,i);
                 rock.drawEntity();
-                this.rocks.push(rock);
+                world.entityManager.addEntity(rock);
             break;
             case AssetsType.diamond: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
                 this.map[i][j] = AssetsType.background;
-                var diamond = new Diamond(j,i);
+                var diamond = new Diamond(world,j,i);
                 diamond.drawEntity();
-                this.diamonds.push(diamond);
+                world.entityManager.addEntity(diamond);
             break;
             
 

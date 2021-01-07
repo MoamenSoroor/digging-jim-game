@@ -5,6 +5,7 @@ const Direction =
   DOWN: 1,
   LEFT: 2,
   RIGHT: 3,
+  None: 4
 
 }
 
