@@ -4,15 +4,11 @@
    this.map = map1;
    this.width = map1[0].length;
    this.height = map1.length;
-   this.player = null;
-   this.diamonds = [];
-   this.rocks = [];
-
  }
 
 
 
-WorldMap.prototype.drawWorldMap = function ()
+WorldMap.prototype.drawWorldMap = function (world)
 {
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
@@ -33,20 +29,24 @@ WorldMap.prototype.drawWorldMap = function ()
             break;
             case AssetsType.character: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
-                this.player = new Player(j,i);
+                this.map[i][j] = AssetsType.background;
+                this.player = new Player(world,j,i);
                 this.player.drawEntity();
+                world.entityManager.setPlayer(this.player);
             break;
             case AssetsType.rock: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
-                var rock = new Rock(j,i);
+                this.map[i][j] = AssetsType.background;
+                var rock = new Rock(world,j,i);
                 rock.drawEntity();
-                this.rocks.push(rock);
+                world.entityManager.addEntity(rock);
             break;
             case AssetsType.diamond: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
-                var diamond = new Diamond(j,i);
+                this.map[i][j] = AssetsType.background;
+                var diamond = new Diamond(world,j,i);
                 diamond.drawEntity();
-                this.diamonds.push(diamond);
+                world.entityManager.addEntity(diamond);
             break;
             
 
@@ -71,8 +71,6 @@ WorldMap.prototype.updateTileTo = function(xpos,ypos,tileType,duration)
     if(duration != undefined && duration != null)
     {
       var self = this;
-      var counter = 0;
-      var max = duration/25;
       setTimeout(() => {
         var tile = new Tile(xpos,ypos,tileType); 
         self.map[ypos][xpos] = tile.tileType;
@@ -111,7 +109,7 @@ WorldMap.prototype.updateTileTo = function(xpos,ypos,tileType,duration)
 
 WorldMap.prototype.checkTileType = function(xpos,ypos,tileType)
 {
-  return this.getTile(xpos,ypos,).tileType == tileType;
+  return this.getTile(xpos,ypos).tileType == tileType;
 }
 
 

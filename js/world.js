@@ -6,103 +6,96 @@
 // tileHeight is the height of the one tile
 // playerxpos is the tile number in x axis
 // playerypox is the tile number in y axis 
-var World = function (worldMap1)
+var World = function (map)
 {
-  this.worldMap = worldMap1;
+  this.worldMap = new WorldMap(map);
   this.score = 0;
+  this.width = this.worldMap.width;
+  this.height = this.worldMap.height;
   this.player = null;
-  this.diamonds = null;
-  this.rocks = null;
+  this.entityManager = null;
   this.controls = controls;
   this.controls.initControls();
+  this.entityManager = new EntityManager(this);
+
+  this.isWorldStop = false;
+  
+
+}
+
+World.prototype.stop = function ()
+{
+  this.isWorldStop = true; 
+}
+
+World.prototype.continue = function()
+{
+  this.isWorldStop = false; 
 }
 
 World.prototype.start = function()
 {
   var self = this;
-  this.worldMap.drawWorldMap();
+  this.worldMap.drawWorldMap(this);
   this.player = this.worldMap.player;
-  this.diamonds = this.worldMap.diamonds;
-  this.rocks = this.worldMap.rocks;
+  this.entityManager.initEntityManager();
+  
 
   this.controls.onKeyUp = function () {
-    self.movePlayer(Direction.UP);
+    if(!self.isWorldStop)
+    {
+      self.entityManager.requestPlayerMove(Direction.UP);
+    }
   }
   this.controls.onKeyDown = function () {
-    self.movePlayer(Direction.DOWN);
+    if(!self.isWorldStop)
+    {
+      self.entityManager.requestPlayerMove(Direction.DOWN);
+    }
   }
 
   this.controls.onKeyLeft = function () {
-    self.movePlayer(Direction.LEFT);
+    if(!self.isWorldStop)
+    {
+
+      self.entityManager.requestPlayerMove(Direction.LEFT);
+    }
   }
   this.controls.onKeyRight = function () {
-    self.movePlayer(Direction.RIGHT);
+    if(!self.isWorldStop)
+    {
+      self.entityManager.requestPlayerMove(Direction.RIGHT);
+    }
   }
 
 }
 
-// pass direction ex:  Direction.UP 
-World.prototype.movePlayer = function(direction)
-{
-  if(!this.player.isMovingX() && !this.player.isMovingY())
-  {
-    var tile = null;
-    switch(direction)
-    {
-      case Direction.UP:
-        tile = this.worldMap.getTile(this.player.xpos, this.player.ypos - 1);
-      break;
-      case Direction.DOWN:
-        tile = this.worldMap.getTile(this.player.xpos, this.player.ypos + 1);
-        
-      break;
-      case Direction.LEFT:
-        tile = this.worldMap.getTile(this.player.xpos - 1, this.player.ypos);
-      break;
-      case Direction.RIGHT:
-        tile = this.worldMap.getTile(this.player.xpos + 1, this.player.ypos);
-      break;
-  
-      default: 
-        throw new Error("Not Valid Direction");
-      break;
-    }
-  
-    console.log(tile);
-    console.log(this.player);
-  
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        this.player.moveToDirection(direction);
-      break;
-      case AssetsType.dirt:
-        this.player.moveToDirection(direction);
-        this.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);
-        
-      break;
-    }
-  }
-  
-
-}
 
 World.prototype.moveScrollBar = function()
 {
-  
-
-  //var xp = Entity.toPixelX(this.player.xpos );
-
-  // logic scroll bar
-
-
+ 
 }
 
 
 
+World.prototype.onWin = function ()
+{
+
+}
 
 
+World.prototype.onFail = function ()
+{
+  
+}
 
+World.prototype.onEatDiamond = function(value)
+{
+  console.log("diamond has been eaten");
+  console.log(value);
+  this.score+= value;
+  
+} 
 
 
 

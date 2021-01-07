@@ -60,13 +60,16 @@ var dom = {
 
     getImage: function(id){
         return document.getElementById(id);
+    },
+    removeImage: function(im) {
+        document.body.removeChild(im);
     }
 
 
 }
 
 
-var ui =  
+const ui =  
 {
     positionToPixels: function (tile)
     {
