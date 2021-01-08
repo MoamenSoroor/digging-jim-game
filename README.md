@@ -1,2 +1,1 @@
-# CTS-game-Task
-Digging Jim Game
+# Digging Jim Game
