@@ -12,15 +12,18 @@ const Direction =
 
 
 const AssetsType = {
-<<<<<<< HEAD
   background: 0,
   dirt: 1,
-  block: 2,
+  block:  2,
   rock: 3,
-  diamond: 4,
+  diamond:  4,
   character: 5,
-  door: 6
+  door: 6,
+  openDoor: 7,
+  CharR1: 8,
+  CharL1: 9,
 };
+
 
 const AssetsSrc = {
   0: "resources/images/black.png",
@@ -30,6 +33,9 @@ const AssetsSrc = {
   4: "resources/images/diamond.gif",
   5: "resources/images/character2.png",
   6: "resources/images/door.png",
+  7: "images/openDoor.jpg",
+  8: "images/R1.png",
+  9: "images/L1.png",
 
   "resources/images/black.png": 0,
   "resources/images/dirtback.gif": 1,
@@ -38,6 +44,9 @@ const AssetsSrc = {
   "resources/images/diamond.gif": 4,
   "resources/images/character2.png": 5,
   "resources/images/door.png": 6,
+  "images/openDoor.jpg": 7,
+  "images/R1.png": 8,
+  "images/L1.png": 9,
 };
 
 
@@ -58,48 +67,12 @@ const AudioSrc = {
   "resources/sounds/rockstart.wav": 1,
   "resources/sounds/rockfall.wav": 2,
   "resources/sounds/takeCoin3.mp3": 3,
-=======
-    background: 0,
-    dirt: 1,
-    block:  2,
-    rock: 3,
-    diamond:  4,
-    character: 5,
-    door: 6,
-    openDoor: 7,
-    CharR1: 8,
-    CharL1: 9,
-  };
-  
-  const AssetsSrc = {
-    0: "images/background.png",
-    1: "images/Sand.png",
-    2: "images/block.jpg",
-    3: "images/rock.png",
-    4: "images/Diamond.png",
-    5: "images/1.png",
-    6: "images/door.jpg" ,
-    7: "images/openDoor.jpg",
-    8: "images/R1.png",
-    9: "images/L1.png",
+};
 
-    "images/background.png" : 0,
-    "images/Sand.png" : 1,
-    "images/block.jpg" : 2,
-    "images/rock.png" : 3,
-    "images/Diamond.png" : 4,
-    "images/1.png" : 5,
-    "images/door.jpg" : 6,
-    "images/openDoor.jpg": 7,
-    "images/R1.png": 8,
-    "images/L1.png": 9,
 
-  };
 
-var Assets = function()
-{
- 
->>>>>>> moamen-branch
+var Assets = function () {
+
 }
 
 
