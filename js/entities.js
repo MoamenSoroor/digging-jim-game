@@ -171,8 +171,10 @@ var Player  = function (world, x, y)
 
     // this.keysUp = ["","",""];
     // this.keysDown = ["","",""];
-    // this.keyLeft = ["","",""];
-    // this.keysRight= ["","",""];
+    this.keysLeft   = [Assets.getSrc(AssetsType.CharL1)];
+    this.keysRight = [Assets.getSrc(AssetsType.CharR1)];
+    this.keysDown = [Assets.getSrc(AssetsType.character)];
+    this.keysUp = [Assets.getSrc(AssetsType.character)];
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -226,6 +228,12 @@ Player.prototype.moveUp = function(onFinish)
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);    
         Entity.prototype.moveUp.call(this,1,onFinish);   
       break;
+      case AssetsType.door:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        Entity.prototype.moveUp.call(this,1,onFinish);
+        this.world.onWin();
+        this.world.stop();
+      break;
     }
 
 }
@@ -249,6 +257,12 @@ Player.prototype.moveDown = function(onFinish)
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);     
         Entity.prototype.moveDown.call(this,1,onFinish);  
       break;
+      case AssetsType.door:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        Entity.prototype.moveDown.call(this,1,onFinish);
+        this.world.onWin();
+        this.world.stop();
+      break;
     }
 }
 
@@ -268,6 +282,12 @@ Player.prototype.moveLeft = function(onFinish)
           this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);       
           Entity.prototype.moveLeft.call(this,1,onFinish);
       break;
+      case AssetsType.door:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        Entity.prototype.moveLeft.call(this,1,onFinish);
+        this.world.onWin();
+        this.world.stop();
+      break;
     }
 }
 
@@ -286,6 +306,12 @@ Player.prototype.moveRight = function(onFinish)
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);      
         Entity.prototype.moveRight.call(this,1,onFinish); 
+      break;
+      case AssetsType.door:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        Entity.prototype.moveRight.call(this,1,onFinish);
+        this.world.onWin();
+        this.world.stop();
       break;
     }
 }
@@ -329,7 +355,11 @@ FallingEntity.prototype.moveDown = function()
         if(this.world.player.xpos == this.xpos && this.world.player.ypos == this.ypos + 1)
         {
           if(this.isFalling)
+          {
             this.world.stop();
+            this.world.onFail();
+
+          }
 
         }
         else

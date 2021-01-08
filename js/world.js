@@ -27,7 +27,6 @@ World.prototype.stop = function ()
 {
   this.isWorldStop = true; 
   this.entityManager.stop();
-  this.onFail();
 }
 
 World.prototype.continue = function()
@@ -82,13 +81,14 @@ World.prototype.moveScrollBar = function()
 
 World.prototype.onWin = function ()
 {
-
+  console.log("-------------------- you win -------------------");
+  console.log("-------------------- you score " + this.score +" -------------------");
 }
 
 
 World.prototype.onFail = function ()
 {
-  console.log("-------------------- you are loser -------------------")
+  console.log("-------------------- you are loser -------------------");
 }
 
 World.prototype.onEatDiamond = function(value)
