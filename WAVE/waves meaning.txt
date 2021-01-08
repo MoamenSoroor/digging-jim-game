@@ -1,0 +1,13 @@
+144 open door
+142 move character
+141 yaheee
+133 yahooo
+139 pipe 
+140 pipe
+130 glass broken
+118 die
+116 rock fall
+120 diamond fall
+
+
+

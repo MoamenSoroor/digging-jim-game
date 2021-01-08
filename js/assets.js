@@ -22,6 +22,7 @@ const AssetsType = {
     openDoor: 7,
     CharR1: 8,
     CharL1: 9,
+    lose: 10,
   };
   
   const AssetsSrc = {
@@ -31,10 +32,11 @@ const AssetsType = {
     3: "images/rock.png",
     4: "images/Diamond.png",
     5: "images/1.png",
-    6: "images/door.jpg" ,
-    7: "images/openDoor.jpg",
+    6: "images/exit.gif" ,
+    7: "images/opendoor.png",
     8: "images/R1.png",
     9: "images/L1.png",
+    10: "images/lose.gif",
 
     "images/background.png" : 0,
     "images/Sand.png" : 1,
@@ -43,9 +45,10 @@ const AssetsType = {
     "images/Diamond.png" : 4,
     "images/1.png" : 5,
     "images/door.jpg" : 6,
-    "images/openDoor.jpg": 7,
+    "images/opendoor.png": 7,
     "images/R1.png": 8,
     "images/L1.png": 9,
+    "images/lose.gif": 10
 
   };
 
@@ -75,3 +78,27 @@ Assets.getType = function (src)
 }
 
 
+const SoundSrc = {
+  moveChar: "WAVE/142.wav",
+  eatCoins: "WAVE/eatcoins.mp3",
+  rockFalling: "WAVE/116.wav",
+  diamondFalling: "WAVE/120.wav",
+  win: "WAVE/133.wav",
+  lose: "WAVE/118.wav",
+
+}
+
+
+function Sound(src) {
+  this.sound = dom.createSound(src);
+  this.sound.src = src;
+
+  this.play = function()
+  {
+    this.sound.play();
+  }
+  this.stop = function()
+  {
+    this.sound.pause();
+  }
+}

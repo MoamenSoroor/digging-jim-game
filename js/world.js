@@ -78,6 +78,65 @@ World.prototype.moveScrollBar = function()
 }
 
 
+World.prototype.onWinInternal = function ()
+{
+
+  this.player.removeEntity();
+  this.player.winSound.play();
+  this.onWin();
+  this.stop();
+
+}
+
+
+World.prototype.onFailInternal = function ()
+{
+  this.worldMap.updateTileTo(this.player.xpos - 1,this.player.ypos - 1,AssetsType.background);
+  this.worldMap.updateTileTo(this.player.xpos - 1,this.player.ypos,AssetsType.background);
+  this.worldMap.updateTileTo(this.player.xpos - 1,this.player.ypos + 1,AssetsType.background);
+  this.worldMap.updateTileTo(this.player.xpos + 1,this.player.ypos - 1,AssetsType.background);
+  this.worldMap.updateTileTo(this.player.xpos + 1,this.player.ypos,AssetsType.background);
+  this.worldMap.updateTileTo(this.player.xpos + 1,this.player.ypos + 1,AssetsType.background);
+  this.worldMap.updateTileTo(this.player.xpos,this.player.ypos - 1,AssetsType.background);
+  this.worldMap.updateTileTo(this.player.xpos,this.player.ypos + 1,AssetsType.background);
+
+
+  var e1 =  this.entityManager.getEntity(this.player.xpos - 1,this.player.ypos - 1)
+  var e2 =  this.entityManager.getEntity(this.player.xpos - 1,this.player.ypos)
+  var e3 =  this.entityManager.getEntity(this.player.xpos - 1,this.player.ypos + 1)
+  var e4 =  this.entityManager.getEntity(this.player.xpos + 1,this.player.ypos - 1)
+  var e5 =  this.entityManager.getEntity(this.player.xpos + 1,this.player.ypos)
+  var e6 =  this.entityManager.getEntity(this.player.xpos + 1,this.player.ypos + 1)
+  var e7 =  this.entityManager.getEntity(this.player.xpos,this.player.ypos - 1)
+  var e8 =  this.entityManager.getEntity(this.player.xpos,this.player.ypos + 1)
+
+
+  if(e1 != null) e1.removeEntity();
+  if(e2 != null) e2.removeEntity();
+  if(e3 != null) e3.removeEntity();
+  if(e4 != null) e4.removeEntity();
+  if(e5 != null) e5.removeEntity();
+  if(e6 != null) e6.removeEntity();
+  if(e7 != null) e7.removeEntity();
+  if(e8 != null) e8.removeEntity();
+
+  dom.addImage(dom.createImg(Assets.getSrc(AssetsType.lose),"lose",
+    Entity.toPixelX(this.player.xpos - 1),
+      Entity.toPixelX(this.player.ypos - 1), Entity.width * 3 , Entity.height * 3));
+
+  this.player.removeEntity();
+
+  this.stop();
+  this.onFail();
+  this.player.loseSound.play();
+}
+
+World.prototype.onEatDiamondInternal = function(value)
+{
+  this.onEatDiamond(value);
+  
+} 
+
 
 World.prototype.onWin = function ()
 {

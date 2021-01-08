@@ -63,7 +63,17 @@ var dom = {
     },
     removeImage: function(im) {
         document.body.removeChild(im);
-    }
+    },
+    createSound: function (src) {
+        var sound = window.document.createElement("audio");
+        sound.src = src;
+        sound.setAttribute("preload", "auto");
+        sound.setAttribute("controls", "none");
+        sound.setAttribute("muted", "false");
+        sound.style.display = "none";
+        document.body.appendChild(sound);
+        return sound;
+      }
 
 
 }

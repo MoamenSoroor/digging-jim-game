@@ -29,6 +29,7 @@ EntityManager.prototype.onMovingPlayer = function(relativeEntity,direction)
         {
             this.player.moveToDirection(direction);
             this.eatDiamond(relativeEntity);
+            this.player.eatCoinsSound.play();
             //console.log("diamond here man!");
         }
         else if(relativeEntity.entityType == AssetsType.rock)
@@ -142,7 +143,7 @@ EntityManager.prototype.eatDiamond = function(entity)
         //console.log("to remove diamond");
         this.entities[entity.xpos].splice(index,1);
         entity.removeEntity();
-        this.world.onEatDiamond(entity.diamondValue);
+        this.world.onEatDiamondInternal(entity.diamondValue);
 
     }
 }

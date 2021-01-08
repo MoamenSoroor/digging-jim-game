@@ -169,6 +169,11 @@ var Player  = function (world, x, y)
 {
     Entity.call(this,world,x,y,"player",AssetsType.character);
 
+    this.moveSound = new Sound(SoundSrc.moveChar);
+    this.eatCoinsSound = new Sound(SoundSrc.eatCoins);
+    this.winSound = new Sound(SoundSrc.win);
+    this.loseSound = new Sound(SoundSrc.lose);
+
     // this.keysUp = ["","",""];
     // this.keysDown = ["","",""];
     this.keysLeft   = [Assets.getSrc(AssetsType.CharL1)];
@@ -227,12 +232,12 @@ Player.prototype.moveUp = function(onFinish)
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);    
         Entity.prototype.moveUp.call(this,1,onFinish);   
+        this.moveSound.play();
       break;
       case AssetsType.door:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
         Entity.prototype.moveUp.call(this,1,onFinish);
-        this.world.onWin();
-        this.world.stop();
+        this.world.onWinInternal();
       break;
     }
 
@@ -256,12 +261,12 @@ Player.prototype.moveDown = function(onFinish)
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);     
         Entity.prototype.moveDown.call(this,1,onFinish);  
+        this.moveSound.play();
       break;
       case AssetsType.door:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
         Entity.prototype.moveDown.call(this,1,onFinish);
-        this.world.onWin();
-        this.world.stop();
+        this.world.onWinInternal();
       break;
     }
 }
@@ -281,12 +286,12 @@ Player.prototype.moveLeft = function(onFinish)
       case AssetsType.dirt:
           this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);       
           Entity.prototype.moveLeft.call(this,1,onFinish);
+          this.moveSound.play();
       break;
       case AssetsType.door:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
         Entity.prototype.moveLeft.call(this,1,onFinish);
-        this.world.onWin();
-        this.world.stop();
+        this.world.onWinInternal();
       break;
     }
 }
@@ -306,12 +311,12 @@ Player.prototype.moveRight = function(onFinish)
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);      
         Entity.prototype.moveRight.call(this,1,onFinish); 
+        this.moveSound.play();
       break;
       case AssetsType.door:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
         Entity.prototype.moveRight.call(this,1,onFinish);
-        this.world.onWin();
-        this.world.stop();
+        this.world.onWinInternal();
       break;
     }
 }
@@ -325,6 +330,8 @@ var FallingEntity = function(world,x, y,id,assetType,keysUp, keysDown, keysLeft,
     Entity.call(this,world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight);
 
     this.isFalling = false;
+
+    this.fallingSound = null;
 
 
 
@@ -356,16 +363,22 @@ FallingEntity.prototype.moveDown = function()
         {
           if(this.isFalling)
           {
-            this.world.stop();
-            this.world.onFail();
+            this.world.onFailInternal();
+            
 
           }
 
         }
         else
         {
-          Entity.prototype.moveDown.call(this,1);
+          var self = this;
+          Entity.prototype.moveDown.call(this,1,function () {
+              if(self.world.worldMap.checkTileType(self.xpos,self.ypos + 1,AssetsType.dirt))
+                  self.fallingSound.play();
+            });
           this.isFalling = true;
+
+          
 
         }
       break;
@@ -417,6 +430,8 @@ FallingEntity.prototype.moveRight = function()
 var Rock  = function (world, x, y)
 {
     FallingEntity.call(this,world,x,y,"rock" + x + "-" + y,AssetsType.rock);
+
+    this.fallingSound = new Sound(SoundSrc.rockFalling);
 }
 
 Rock.prototype = Object.create(FallingEntity.prototype);
@@ -425,10 +440,12 @@ Rock.prototype.constructor = Rock.constructor;
 
 
 
-var Diamond  = function (world, x, y)
+var Diamond  = function (world, x, y,value)
 {
     FallingEntity.call(this,world,x,y,"diamond" + x + "-" + y,AssetsType.diamond);
-    this.diamondValue = 1;
+    this.diamondValue = value || 1;
+
+    this.fallingSound = new Sound(SoundSrc.diamondFalling);
 }
 
 Diamond.prototype = Object.create(FallingEntity.prototype);
