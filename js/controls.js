@@ -26,8 +26,11 @@ var controls = {
     initControls: function()
     {
         var self = this;
-        document.oncontextmenu = function (e) {e.preventDefault()  }
-
+        // document.oncontextmenu = function (e) {e.preventDefault()  }
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+        
         document.body.onkeydown = function (e) {
             // ArrowDown
             // ArrowUp
@@ -36,6 +39,7 @@ var controls = {
 
             if(e.key == keys.UP || e.key == keys.W  || e.key == keys.w )
             {
+                e.preventDefault();
                 console.log(keys.UP);
                 self.isUPPressed = true;
                 self.onKeyUp();
@@ -43,6 +47,7 @@ var controls = {
             }
             else if(e.key == keys.DOWN || e.key == keys.S  || e.key == keys.s)
             {
+                e.preventDefault();
                 console.log(keys.DOWN);
                 self.isDownPressed = true;
                 self.onKeyDown();
@@ -51,6 +56,7 @@ var controls = {
                 
             else if(e.key == keys.LEFT || e.key == keys.A  || e.key == keys.a)
             {
+                e.preventDefault();
                 console.log(keys.LEFT);
                 self.isLeftPressed = true;
                 self.onKeyLeft();
@@ -58,6 +64,7 @@ var controls = {
                 
             else if(e.key == keys.RIGHT|| e.key == keys.D  || e.key == keys.d)
             {
+                e.preventDefault();
                 console.log(keys.RIGHT);
                 self.isRightPressed = true;
                 self.onKeyRight();
@@ -88,6 +95,13 @@ var controls = {
     {
         console.log("on key right not registerd.");
     },
+
+    unRegisterControls: function ()
+    {
+        document.body.onkeydown = function () {
+            return true;
+        }
+    }
 
 
 }

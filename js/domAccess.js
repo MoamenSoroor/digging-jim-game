@@ -1,46 +1,43 @@
 
-var idManager = 
+var idManager =
 {
-    
-    createId: function (x,y)
-    {
-        return "id"+x+"-"+y;
+
+    createId: function (x, y) {
+        return "id" + x + "-" + y;
     },
 
-    parseId: function(str){
+    parseId: function (str) {
 
         var arr = str.split("-");
-        return { xpos: parseInt(arr[0].substring(2)), ypos: parseInt(arr[1])};
+        return { xpos: parseInt(arr[0].substring(2)), ypos: parseInt(arr[1]) };
     },
 
-    generateIds: function (w,h)
-    {
+    generateIds: function (w, h) {
         var ids = [];
 
         for (let i = 0; i < w; i++) {
             for (let j = 0; j < h; j++) {
-            ids.push(createId(i,j));
+                ids.push(createId(i, j));
             }
         }
 
         return ids;
     },
 
-    isValidId: function(id)
-    {
+    isValidId: function (id) {
         return /id[0-9]+-[0-9]+/.test(id);
     },
 
-    
+
 }
 
 
 var dom = {
 
-    imgClass:"",
-    createImg: function (src, nid, pixelX, pixelY,width,height) {
+    imgClass: "",
+    createImg: function (src, nid, pixelX, pixelY, width, height) {
         var elem = window.document.createElement("img");
-        
+
         elem.setAttribute("id", nid);
         elem.setAttribute("class", this.imgClass);
         elem.style.position = "absolute";
@@ -51,53 +48,57 @@ var dom = {
         elem.src = src;
         //this.addImage(elem);
         return elem;
-      },
+    },
 
-    
-    addImage : function (im) {
+
+    addImage: function (im) {
         document.body.appendChild(im);
     },
 
-    getImage: function(id){
+    getImage: function (id) {
         return document.getElementById(id);
     },
-    removeImage: function(im) {
+    removeImage: function (im) {
         document.body.removeChild(im);
+    },
+    removeImageById: function (id) {
+        document.getElementById(id).remove();
     }
 
 
 }
 
 
-const ui =  
+const ui =
 {
-    positionToPixels: function (tile)
-    {
-        return { pixelX: tile.xpos * Tile.tileWidth , pixelY: tile.ypos * Tile.tileHeight};
+    positionToPixels: function (tile) {
+        return { pixelX: tile.xpos * Tile.tileWidth, pixelY: tile.ypos * Tile.tileHeight };
     },
-    
+
     // tile is {xpos,ypox,src}
-    createTile: function (tile)
-    {
-        var id = idManager.createId(tile.xpos,tile.ypos);
+    createTile: function (tile) {
+        var id = idManager.createId(tile.xpos, tile.ypos);
         var pos = this.positionToPixels(tile);
         console.log(pos);
-        var im = dom.createImg(tile.src, id, pos.pixelX, pos.pixelY,Tile.tileWidth, Tile.tileHeight);
+        var im = dom.createImg(tile.src, id, pos.pixelX, pos.pixelY, Tile.tileWidth, Tile.tileHeight);
         dom.addImage(im);
     },
 
-    updateTile: function (tile)
-    {
+    updateTile: function (tile) {
         console.log(tile);
-        var id = idManager.createId(tile.xpos,tile.ypos);
+        var id = idManager.createId(tile.xpos, tile.ypos);
         console.log("id = " + id);
         dom.getImage(id).src = tile.src;
     },
-    
-    getTile: function (x, y)
-    {
-        var id = idManager.createId(x,y);
-        return new Tile(x,y,Tile.getTileType(dom.getImage(id)));
+
+    getTile: function (x, y) {
+        var id = idManager.createId(x, y);
+        return new Tile(x, y, Tile.getTileType(dom.getImage(id)));
     },
+
+    removeTile: function (x, y) {
+        var id = idManager.createId(x, y);
+        dom.getImage(id).remove();
+    }
 }
 

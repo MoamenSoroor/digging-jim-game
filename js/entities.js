@@ -214,7 +214,8 @@ Player.prototype.moveUp = function(onFinish)
         Entity.prototype.moveUp.call(this,1,onFinish);
       break;
       case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);    
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);
+        audio(AudioType.move); 
         Entity.prototype.moveUp.call(this,1,onFinish);   
       break;
     }
@@ -237,7 +238,8 @@ Player.prototype.moveDown = function(onFinish)
         Entity.prototype.moveDown.call(this,1,onFinish);
       break;
       case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);     
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50); 
+        audio(AudioType.move);     
         Entity.prototype.moveDown.call(this,1,onFinish);  
       break;
     }
@@ -256,7 +258,8 @@ Player.prototype.moveLeft = function(onFinish)
         Entity.prototype.moveLeft.call(this,1,onFinish);
       break;
       case AssetsType.dirt:
-          this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);       
+          this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);
+          audio(AudioType.move);       
           Entity.prototype.moveLeft.call(this,1,onFinish);
       break;
     }
@@ -275,7 +278,8 @@ Player.prototype.moveRight = function(onFinish)
         Entity.prototype.moveRight.call(this,1,onFinish);
       break;
       case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);      
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50); 
+        audio(AudioType.move);
         Entity.prototype.moveRight.call(this,1,onFinish); 
       break;
     }
