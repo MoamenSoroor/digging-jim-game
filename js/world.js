@@ -23,8 +23,10 @@ var World = function (map, game) {
 
 }
 
-World.prototype.stop = function () {
-  this.isWorldStop = true;
+World.prototype.stop = function ()
+{
+  this.isWorldStop = true; 
+  this.entityManager.stop();
 }
 
 World.prototype.continue = function () {

@@ -51,8 +51,10 @@ AnimatedImage.prototype.move = function(duration,dx,dy, keys,onFinishX,onFinishY
     
     if(keys != null && keys != undefined && keys.length > 0)
     {
-        
-        this.srcAnime.play(keys,duration);
+        if(keys.length == 1)
+            this.setSrc(keys[0]);
+        else
+            this.srcAnime.play(keys,duration);
     }
     
     this.moveAnime.playX(dx,duration,onFinishX);
@@ -63,7 +65,10 @@ AnimatedImage.prototype.moveX = function(duration,dx,keys,onFinish)
 {
     if(keys != null && keys != undefined && keys.length > 0)
     {
-        this.srcAnime.play(keys,duration);
+        if(keys.length == 1)
+            this.setSrc(keys[0]);
+        else
+            this.srcAnime.play(keys,duration);
     }
     
     this.moveAnime.playX(dx,duration,onFinish);
@@ -73,7 +78,10 @@ AnimatedImage.prototype.moveY = function(duration,dy,keys,onFinish)
 {
     if(keys != null && keys != undefined && keys.length > 0)
     {
-        this.srcAnime.play(keys,duration);
+        if(keys.length == 1)
+            this.setSrc(keys[0]);
+        else
+            this.srcAnime.play(keys,duration);
     }
     
     this.moveAnime.playY(dy,duration,onFinish);

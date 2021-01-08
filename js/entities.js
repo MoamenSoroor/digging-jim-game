@@ -53,6 +53,15 @@ Entity.prototype.onMoveFinish  = function (){
     // check direcion 
 }
 
+Entity.prototype.getX  = function (){
+  return this.image.getLeft();
+}
+
+
+Entity.prototype.getY  = function (){
+  return this.image.getTop();
+}
+
 
 
 Entity.prototype.moveToDirection = function(direction,delta,onFinish)
@@ -111,7 +120,7 @@ Entity.prototype.moveDown = function(dy,onFinish)
     {
         this.direction = Direction.DOWN;
         this.ypos += dy;
-        this.image.moveY(this.duration,Entity.toPixelY(dy) , this.keysUp,onFinish);
+        this.image.moveY(this.duration,Entity.toPixelY(dy) , this.keysDown,onFinish);
     }
 
 }
@@ -136,7 +145,7 @@ Entity.prototype.moveRight = function(dx,onFinish)
     if(!this.isMovingX())
     {
         this.direction = Direction.RIGHT;
-        this.image.moveX(this.duration, Entity.toPixelY(dx) ,this.keysLeft,onFinish);
+        this.image.moveX(this.duration, Entity.toPixelY(dx) ,this.keysRight,onFinish);
         this.xpos += dx;
     }
 }
@@ -162,8 +171,10 @@ var Player  = function (world, x, y)
 
     // this.keysUp = ["","",""];
     // this.keysDown = ["","",""];
-    // this.keyLeft = ["","",""];
-    // this.keysRight= ["","",""];
+    this.keysLeft   = [Assets.getSrc(AssetsType.CharL1)];
+    this.keysRight = [Assets.getSrc(AssetsType.CharR1)];
+    this.keysDown = [Assets.getSrc(AssetsType.character)];
+    this.keysUp = [Assets.getSrc(AssetsType.character)];
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -218,6 +229,12 @@ Player.prototype.moveUp = function(onFinish)
         audio(AudioType.move); 
         Entity.prototype.moveUp.call(this,1,onFinish);   
       break;
+      case AssetsType.door:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        Entity.prototype.moveUp.call(this,1,onFinish);
+        this.world.onWin();
+        this.world.stop();
+      break;
     }
 
 }
@@ -242,6 +259,12 @@ Player.prototype.moveDown = function(onFinish)
         audio(AudioType.move);     
         Entity.prototype.moveDown.call(this,1,onFinish);  
       break;
+      case AssetsType.door:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        Entity.prototype.moveDown.call(this,1,onFinish);
+        this.world.onWin();
+        this.world.stop();
+      break;
     }
 }
 
@@ -261,6 +284,12 @@ Player.prototype.moveLeft = function(onFinish)
           this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);
           audio(AudioType.move);       
           Entity.prototype.moveLeft.call(this,1,onFinish);
+      break;
+      case AssetsType.door:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        Entity.prototype.moveLeft.call(this,1,onFinish);
+        this.world.onWin();
+        this.world.stop();
       break;
     }
 }
@@ -282,6 +311,12 @@ Player.prototype.moveRight = function(onFinish)
         audio(AudioType.move);
         Entity.prototype.moveRight.call(this,1,onFinish); 
       break;
+      case AssetsType.door:
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        Entity.prototype.moveRight.call(this,1,onFinish);
+        this.world.onWin();
+        this.world.stop();
+      break;
     }
 }
 
@@ -292,6 +327,8 @@ Player.prototype.moveRight = function(onFinish)
 var FallingEntity = function(world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight) 
 {
     Entity.call(this,world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight);
+
+    this.isFalling = false;
 
 
 
@@ -319,8 +356,25 @@ FallingEntity.prototype.moveDown = function()
     switch(tile.tileType)
     {
       case AssetsType.background:
-        Entity.prototype.moveDown.call(this,1);
+        if(this.world.player.xpos == this.xpos && this.world.player.ypos == this.ypos + 1)
+        {
+          if(this.isFalling)
+          {
+            this.world.stop();
+            this.world.onFail();
+
+          }
+
+        }
+        else
+        {
+          Entity.prototype.moveDown.call(this,1);
+          this.isFalling = true;
+
+        }
       break;
+      default:
+        this.isFalling = false;
     }
 }
 
