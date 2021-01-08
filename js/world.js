@@ -26,6 +26,8 @@ var World = function (map)
 World.prototype.stop = function ()
 {
   this.isWorldStop = true; 
+  this.entityManager.stop();
+  this.onFail();
 }
 
 World.prototype.continue = function()
@@ -86,7 +88,7 @@ World.prototype.onWin = function ()
 
 World.prototype.onFail = function ()
 {
-  
+  console.log("-------------------- you are loser -------------------")
 }
 
 World.prototype.onEatDiamond = function(value)

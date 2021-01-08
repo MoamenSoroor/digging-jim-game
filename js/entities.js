@@ -53,6 +53,15 @@ Entity.prototype.onMoveFinish  = function (){
     // check direcion 
 }
 
+Entity.prototype.getX  = function (){
+  return this.image.getLeft();
+}
+
+
+Entity.prototype.getY  = function (){
+  return this.image.getTop();
+}
+
 
 
 Entity.prototype.moveToDirection = function(direction,delta,onFinish)
@@ -111,7 +120,7 @@ Entity.prototype.moveDown = function(dy,onFinish)
     {
         this.direction = Direction.DOWN;
         this.ypos += dy;
-        this.image.moveY(this.duration,Entity.toPixelY(dy) , this.keysUp,onFinish);
+        this.image.moveY(this.duration,Entity.toPixelY(dy) , this.keysDown,onFinish);
     }
 
 }
@@ -136,7 +145,7 @@ Entity.prototype.moveRight = function(dx,onFinish)
     if(!this.isMovingX())
     {
         this.direction = Direction.RIGHT;
-        this.image.moveX(this.duration, Entity.toPixelY(dx) ,this.keysLeft,onFinish);
+        this.image.moveX(this.duration, Entity.toPixelY(dx) ,this.keysRight,onFinish);
         this.xpos += dx;
     }
 }
@@ -289,6 +298,8 @@ var FallingEntity = function(world,x, y,id,assetType,keysUp, keysDown, keysLeft,
 {
     Entity.call(this,world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight);
 
+    this.isFalling = false;
+
 
 
 }
@@ -315,8 +326,21 @@ FallingEntity.prototype.moveDown = function()
     switch(tile.tileType)
     {
       case AssetsType.background:
-        Entity.prototype.moveDown.call(this,1);
+        if(this.world.player.xpos == this.xpos && this.world.player.ypos == this.ypos + 1)
+        {
+          if(this.isFalling)
+            this.world.stop();
+
+        }
+        else
+        {
+          Entity.prototype.moveDown.call(this,1);
+          this.isFalling = true;
+
+        }
       break;
+      default:
+        this.isFalling = false;
     }
 }
 
