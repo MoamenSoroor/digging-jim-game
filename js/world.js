@@ -161,12 +161,15 @@ World.prototype.moveScrollBar = function()
  
 }
 
+// when pause the world
 World.prototype.onStop = function () {
-
+  console.log("pause world 1111111111111111111111111111111111111");
 }
 
-World.prototype.onPlay = function () {
 
+// when play the world
+World.prototype.onPlay = function () {
+  console.log("---------------------- play world 1111111111111111111111111111111111111");
 }
 
 

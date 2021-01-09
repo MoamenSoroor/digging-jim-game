@@ -10,6 +10,7 @@
 
 WorldMap.prototype.drawWorldMap = function (world)
 {
+
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
 
@@ -39,6 +40,13 @@ WorldMap.prototype.drawWorldMap = function (world)
                 this.player = new Player(world,j,i);
                 this.player.drawEntity();
                 world.entityManager.setPlayer(this.player);
+            break;
+            case AssetsType.enemy: 
+                ui.createTile(new Tile(j,i,AssetsType.background));
+                this.map[i][j] = AssetsType.background;
+                var enemy = new Enemy(world,j,i);
+                enemy.drawEntity();
+                world.entityManager.addEntity(enemy);
             break;
             case AssetsType.rock: 
                 ui.createTile(new Tile(j,i,AssetsType.background));

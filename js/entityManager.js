@@ -153,6 +153,16 @@ EntityManager.prototype.addEntity = function(entity)
 }
 
 
+EntityManager.prototype.addEnemy = function(entity)
+{
+    this.entities[entity.xpos].unshift(entity);
+
+    //this.entities[entity.xpos].sort((a, b) => { a.ypos - b.ypos })
+}
+
+
+
+
 EntityManager.prototype.eatDiamond = function(entity)
 {
     var index = this.entities[entity.xpos].findIndex(en => en.ypos == entity.ypos);
@@ -190,6 +200,14 @@ EntityManager.prototype.falling = function()
     for (let i = 0; i < this.world.width; i++) {
         
         this.entities[i].forEach((value) => {
+
+
+            // if(value.entityType == AssetsType.enemy)
+            // {
+            //     console.log("enemy");
+            //     value.move();
+            //     return;
+            // }
             
             if(!this.hasEntity(value.xpos,value.ypos + 1))
             {

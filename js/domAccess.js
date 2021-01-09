@@ -70,8 +70,8 @@ var dom = {
         sound.setAttribute("preload", "auto");
         sound.setAttribute("controls", "none");
         sound.setAttribute("muted", "false");
-        sound.style.display = "none";
-        document.body.appendChild(sound);
+        //sound.style.display = "none";
+        //document.body.appendChild(sound);
         return sound;
       }
 

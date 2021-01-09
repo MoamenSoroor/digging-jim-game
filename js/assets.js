@@ -25,6 +25,8 @@ const AssetsType = {
     lose: 10,
     tubeUD: 11, // up down tube
     tubeLF: 12, // left right tube
+    enemy: 13,
+
   };
   
   const AssetsSrc = {
@@ -41,6 +43,7 @@ const AssetsType = {
     10: "images/lose.gif",
     11: "images/tube1.png",
     12: "images/tube1LR.png",
+    13: "images/enemy1.gif",
 
     "images/background.png" : 0,
     "images/Sand.png" : 1,
@@ -55,6 +58,7 @@ const AssetsType = {
     "images/lose.gif": 10,
     "images/tube1.png" : 11 ,
     "images/tube1LR.png" : 12 ,
+    "images/enemy1.gif": 13,
 
   };
 
@@ -103,6 +107,7 @@ function Sound(src) {
   this.play = function()
   {
     try {
+      this.sound = dom.createSound(src);
       this.sound.play();
     } catch (error) {
       console.log("waring can't play sound");
