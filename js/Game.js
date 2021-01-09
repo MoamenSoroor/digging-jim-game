@@ -172,6 +172,14 @@ function Game(maps) {
         document.getElementById("span6").innerHTML = score;
     }
 
+    this.showPausedDiv = function() {
+        $("#paused").show();
+    }
+
+    this.hidePausedDiv = function() {
+        $("#paused").hide();
+    }
+
     this.hidebar = function () {
         $("#footer").hide();
     }

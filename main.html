@@ -57,6 +57,12 @@
             display: none;
         }
 
+        #paused {
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
         /* img {
             position: absolute;
             vertical-align: bottom;
@@ -118,22 +124,18 @@
                 <h1> Team </h1>
                 <br>
                 <br>
-                <div style="position: absolute; color: darkcyan; left:80%;">
+                <div style="color: darkcyan; display: inline-block; margin: 2%;">
                     <h3>Youssef<br>Mohamed</h3>
-
                 </div>
-                <div style="position: absolute; color: blue; left:40%;">
-                    <h3>momen<br>soroor</h3>
-
+                <div style="color: blue; display: inline-block; margin: 2%;">
+                    <h3>Moamen<br>Soroor</h3>
                 </div>
-                <div style="position: absolute; color: chartreuse; left:20%;">
+                <div style="color: chartreuse;  display: inline-block; margin: 2%;">
                     <h3>Mohamed<br>Alaa</h3>
-
                 </div>
 
-                <div style="position: absolute; color: darkblue; left:60%;">
-                    <h3>Omar<br>Hisham</h3>
-
+                <div style="color: darkblue;  display: inline-block; margin: 2%;">
+                    <h3>Omar<br>Hesham</h>
                 </div>
 
 
@@ -195,6 +197,10 @@
                 <span id="exitGame_01">Exit</span>
             </div>
         </div>
+    </div>
+
+    <div id="paused">
+        <span id="pausedWord">Paused</span>
     </div>
 
 

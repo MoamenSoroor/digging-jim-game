@@ -167,11 +167,11 @@ World.prototype.onEatDiamondInternal = function (value) {
 
 
 World.prototype.onStop = function () {
-
+  this.game.showPausedDiv();
 }
 
 World.prototype.onPlay = function () {
-
+  this.game.hidePausedDiv();
 }
 
 
