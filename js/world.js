@@ -122,8 +122,10 @@ World.prototype.onWinInternal = function () {
 
   this.player.removeEntity();
   this.player.winSound.play();
-  this.onWin();
   this.stop();
+
+  var self = this;
+  setTimeout(function(){self.onWin();},2500);
 
 }
 
@@ -165,8 +167,10 @@ World.prototype.onFailInternal = function () {
   this.player.removeEntity();
 
   this.stop();
-  this.onFail();
   this.player.loseSound.play();
+  var self = this;
+  setTimeout(function(){self.onFail();},2000);
+  
 }
 
 World.prototype.onEatDiamondInternal = function (value) {
