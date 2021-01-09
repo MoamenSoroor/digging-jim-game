@@ -51,8 +51,10 @@ AnimatedImage.prototype.move = function(duration,dx,dy, keys,onFinishX,onFinishY
     
     if(keys != null && keys != undefined && keys.length > 0)
     {
-        
-        this.srcAnime.play(keys,duration);
+        if(keys.length == 1)
+            this.setSrc(keys[0]);
+        else
+            this.srcAnime.play(keys,duration);
     }
     
     this.moveAnime.playX(dx,duration,onFinishX);
@@ -63,7 +65,10 @@ AnimatedImage.prototype.moveX = function(duration,dx,keys,onFinish)
 {
     if(keys != null && keys != undefined && keys.length > 0)
     {
-        this.srcAnime.play(keys,duration);
+        if(keys.length == 1)
+            this.setSrc(keys[0]);
+        else
+            this.srcAnime.play(keys,duration);
     }
     
     this.moveAnime.playX(dx,duration,onFinish);
@@ -73,7 +78,10 @@ AnimatedImage.prototype.moveY = function(duration,dy,keys,onFinish)
 {
     if(keys != null && keys != undefined && keys.length > 0)
     {
-        this.srcAnime.play(keys,duration);
+        if(keys.length == 1)
+            this.setSrc(keys[0]);
+        else
+            this.srcAnime.play(keys,duration);
     }
     
     this.moveAnime.playY(dy,duration,onFinish);
@@ -157,6 +165,7 @@ var AnimateMove = function (image)
     this.durationY = 0;
     this.speedX = 0;
     this.speedY = 0;
+    //this.onFinish = function () {  }
 
 }
 
@@ -187,7 +196,7 @@ AnimateMove.prototype.playX = function(dx,durationX,onFinish){
         this.speedX = parseInt((dx/this.durationX) * 25);
 
         //console.log(this);
-        this.onFinish = onFinish;
+        //this.onFinish = onFinish;
         var self = this;
         this.moveTimerX = setInterval(function () {
             if(self.speedX > 0 && self.image.getLeft() < self.targetX - self.speedX)
@@ -205,13 +214,13 @@ AnimateMove.prototype.playX = function(dx,durationX,onFinish){
                 clearInterval(self.moveTimerX);
                 self.image.setLeft(self.targetX);
                 self.isPlayX = false;
-                // if(onFinish != undefined && onFinish != null)
-                //     self.onFinish();
-                // else
-                //     console.log("on finish is null ")
+                if(onFinish != undefined && onFinish != null)
+                    onFinish();
+                else
+                    console.log("on finish is null ");
             }
 
-        }, FrameTime);
+        }, FrameTime,onFinish);
     }
     
 }
@@ -241,11 +250,13 @@ AnimateMove.prototype.playY = function(dy,durationY,onFinish){
                 clearInterval(self.moveTimerY);
                 self.image.setTop(self.targetY);
                 self.isPlayY = false;
-                // if(onFinish != undefined && onFinish != null)
-                //     self.onFinish();
+                if(onFinish != undefined && onFinish != null)
+                    onFinish();
+                else
+                console.log("on finish is null ");
             }
 
-        }, FrameTime);
+        }, FrameTime,onFinish);
     }
 
 

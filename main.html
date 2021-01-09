@@ -1,12 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html> -->
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
+    <title>Digging Jim Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/beforeStart.css">
+    <link rel="stylesheet" href="css/Draw_div.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
 
     <style>
-        .container{
+        /* .container{
             position: relative;
             width: 100vw;
             height: 100vh;
@@ -14,20 +22,221 @@
             padding: 0;
             border: 3px solid red;
             background-color: gray;
+        } */
+
+        #gameLost {
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        #gameOver {
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        #nextMap {
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        #footer {
+            display: none;
+            z-index: 10;
+        }
+
+        #winAll {
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        #startHome {
+            display: none;
+        }
+
+        #paused {
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* img {
+            position: absolute;
+            vertical-align: bottom;
+        } */
+
+        ::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
-<body>
 
+<body id="myBody">
+
+
+    <div id="startHome" style="height: 100vh; width: 100vh;">
+
+        <!-- Start -->
+
+        <div id='header'>
+            <img src="resources/images/beforeStart/logo.jpg" id="logo">
+        </div>
+        <div id='div' style="display: inline-block;">
+            <h3><button type='button' class="main" id='newgame'>LET'S BEGIN</button></h3>
+            <h3><button type='button' class="main" id='dashbord'>HIGHEST SCORES</button></h3>
+            <h3><button type='button' class="main" id='aboutus'>ABOUT US</button></h3>
+            <h3><button type='button' class="main" id='exit'>EXIT</button></h3>
+        </div>
+        <img src="resources/images/beforeStart/download.jfif" id="jim">
+
+        <!-- LET'S BEGIN-->
+        <div id="popupUserName">
+            <div id="popup-content">
+                <span class="close" id="x"> X</span>
+                <p id="popuptext">Enter Your Name</p>
+                <input type="text" id="pName" required>
+                <br>
+                <span id="temp"></span>
+                <br>
+                <button type="button" id="getPName"><label>LET'S GO</label></button>
+            </div>
+        </div>
+
+
+        <!--High Score-->
+        <div id="highestScorePOPUP">
+            <div id="highestScoreContent">
+                <span id="highspan" class="close">X</span>
+                <div id="list" class="w3-container">
+                    <ol id="olHighScore" class="w3-ul w3-border">
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="popupAboutus">
+            <div id="aboutus-content">
+                <span id="aboutusspan" class="close">X</span>
+                <h1> Team </h1>
+                <br>
+                <br>
+                <div style="color: darkcyan; display: inline-block; margin: 2%;">
+                    <h3>Youssef<br>Mohamed</h3>
+                </div>
+                <div style="color: blue; display: inline-block; margin: 2%;">
+                    <h3>Moamen<br>Soroor</h3>
+                </div>
+                <div style="color: chartreuse;  display: inline-block; margin: 2%;">
+                    <h3>Mohamed<br>Alaa</h3>
+                </div>
+
+                <div style="color: darkblue;  display: inline-block; margin: 2%;">
+                    <h3>Omar<br>Hesham</h>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <!--EXIT-->
+        <div id="exitPopUp">
+            <div id="exitContent">
+                <h1 id="Q">you want to give up?!</h1>
+                <button id="no" class="exitOP">NO</button>
+                <button id="yes" class="exitOP">YES</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="gameLost">
+        <div id="button">
+            <span id="Restart2">Restart</span>
+            <span id="CloseLost">Close</span>
+        </div>
+    </div>
+
+    <div id="gameOver">
+        <p id="pGame" style="text-align: center;">
+            <span>Game Over</span>
+            <br>
+            <br>
+            <span id="Gname"> </span>
+            <br>
+            <span>Score: </span><span id="score"></span>
+        </p>
+        <!-- <p class="pGame2">
+            
+        </p> -->
+
+        <div id="button">
+            <span id="restart">Restart</span>
+            <span id="exitGame">Exit</span>
+        </div>
+    </div>
+
+    <div id="winAll">
+        <div id="winA" style="text-align: center;">
+            <img style="
+            height: 150px;
+            width: 150px;" src="resources/images/King2.png" alt="">
+            <p id="pGame2" style="text-align: center;">
+                <span id="span5">Score</span>
+                <br>
+                <span id="span6"></span>
+            </p>
+            <div id="button2">
+                <span id="restart_01">Restart</span>
+                <span id="exitGame_01">Exit</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="paused">
+        <span id="pausedWord">Paused</span>
+    </div>
+
+
+
+    <div id="footer">
+        <span class="badge" style="background-color: darkgray;">Score</span>
+        <span class="badge" id="score" style="background-color: darkgray;">0</span>
+        <span class="badge" style="background-color: darkgray;">Lives</span>
+        <span class="badge" id="lifes" style="background-color: darkgray;">3</span>
+        <span class="badge" style="background-color: darkgray;">Level</span>
+        <span class="badge" id="level" style="background-color: darkgray;  vertical-align:middle;">1</span>
+    </div>
+
+    <div id="nextMap">
+        <div id="nextM">
+            <span id="Continue">Continue</span>
+            <span id="CloseWin">Close</span>
+        </div>
+    </div>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+    <script src="js/HomeScreen.js"></script>
+    <script src="js/cookies.js"></script>
+    <script src="js/maps.js"></script>
     <script src="js/assets.js"></script>
     <script src="js/domAccess.js"></script>
     <script src="js/animation.js"></script>
     <script src="js/tiles.js"></script>
     <script src="js/entities.js"></script>
+    <script src="js/player.js"></script>
     <script src="js/entityManager.js"></script>
     <script src="js/map.js"></script>
     <script src="js/controls.js"></script>
     <script src="js/world.js"></script>
+    <script src="js/Game.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

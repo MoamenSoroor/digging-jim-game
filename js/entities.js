@@ -53,6 +53,15 @@ Entity.prototype.onMoveFinish  = function (){
     // check direcion 
 }
 
+Entity.prototype.getX  = function (){
+  return this.image.getLeft();
+}
+
+
+Entity.prototype.getY  = function (){
+  return this.image.getTop();
+}
+
 
 
 Entity.prototype.moveToDirection = function(direction,delta,onFinish)
@@ -93,7 +102,7 @@ Entity.prototype.moveUp = function(dy,onFinish)
     if(!this.isMovingY())
     {
         this.direction = Direction.UP;
-        console.log(this);
+        // console.log(this);
         this.ypos -= dy;
         this.image.moveY(this.duration, Entity.toPixelY( -1 * dy) , this.keysUp,onFinish);
     }
@@ -111,7 +120,7 @@ Entity.prototype.moveDown = function(dy,onFinish)
     {
         this.direction = Direction.DOWN;
         this.ypos += dy;
-        this.image.moveY(this.duration,Entity.toPixelY(dy) , this.keysUp,onFinish);
+        this.image.moveY(this.duration,Entity.toPixelY(dy) , this.keysDown,onFinish);
     }
 
 }
@@ -136,7 +145,7 @@ Entity.prototype.moveRight = function(dx,onFinish)
     if(!this.isMovingX())
     {
         this.direction = Direction.RIGHT;
-        this.image.moveX(this.duration, Entity.toPixelY(dx) ,this.keysLeft,onFinish);
+        this.image.moveX(this.duration, Entity.toPixelY(dx) ,this.keysRight,onFinish);
         this.xpos += dx;
     }
 }
@@ -154,140 +163,16 @@ Entity.prototype.isMovingY = function()
 }
 
 
-
-
-var Player  = function (world, x, y)
-{
-    Entity.call(this,world,x,y,"player",AssetsType.character);
-
-    // this.keysUp = ["","",""];
-    // this.keysDown = ["","",""];
-    // this.keyLeft = ["","",""];
-    // this.keysRight= ["","",""];
-}
-
-Player.prototype = Object.create(Entity.prototype);
-
-Player.prototype.constructor = Player.constructor;
-
-
-
-Player.prototype.moveToDirection = function(direction,onFinish)
-{
-    //Entity.prototype.moveToDirection.call(this,direction,1,onFinish);
-
-    switch(direction)
-    {
-      case Direction.UP:
-        this.moveUp(onFinish);
-      break;
-      case Direction.DOWN:
-        this.moveDown(onFinish);
-        
-      break;
-      case Direction.LEFT:
-        this.moveLeft(onFinish);
-      break;
-      case Direction.RIGHT:
-        this.moveRight(onFinish);
-      break;
-  
-      default: 
-        throw new Error("Not Valid Direction");
-      break;
-    }
-}
-
-
-Player.prototype.moveUp = function(onFinish)
-{
-    if(this.direction == Direction.None) this.direction = Direction.UP;
-
-    if(this.isMovingY() && (Direction.UP || Direction.DOWN))
-        return;
-
-    
-    var tile = this.world.worldMap.getTile(this.xpos, this.ypos - 1);
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        Entity.prototype.moveUp.call(this,1,onFinish);
-      break;
-      case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);    
-        Entity.prototype.moveUp.call(this,1,onFinish);   
-      break;
-    }
-
-}
-
-
-Player.prototype.moveDown = function(onFinish)
-{
-    if(this.direction == Direction.None) this.direction = Direction.DOWN;
-
-    if(this.isMovingY() && (Direction.UP || Direction.DOWN))
-        return;
-
-    
-    var tile = this.world.worldMap.getTile(this.xpos, this.ypos + 1);
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        Entity.prototype.moveDown.call(this,1,onFinish);
-      break;
-      case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);     
-        Entity.prototype.moveDown.call(this,1,onFinish);  
-      break;
-    }
-}
-
-Player.prototype.moveLeft = function(onFinish)
-{
-    if(this.isMovingX() && (Direction.LEFT || Direction.RIGHT))
-        return;
-    if(this.direction == Direction.None) this.direction = Direction.LEFT;
-    
-    var tile = this.world.worldMap.getTile(this.xpos - 1, this.ypos );
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        Entity.prototype.moveLeft.call(this,1,onFinish);
-      break;
-      case AssetsType.dirt:
-          this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);       
-          Entity.prototype.moveLeft.call(this,1,onFinish);
-      break;
-    }
-}
-
-Player.prototype.moveRight = function(onFinish)
-{
-    if(this.direction == Direction.None) this.direction = Direction.RIGHT;
-    if(this.isMovingX() && (Direction.LEFT || Direction.RIGHT))
-        return;
-    
-    var tile = this.world.worldMap.getTile(this.xpos + 1, this.ypos );
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        Entity.prototype.moveRight.call(this,1,onFinish);
-      break;
-      case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);      
-        Entity.prototype.moveRight.call(this,1,onFinish); 
-      break;
-    }
-}
-
-
 // rock
 
 
 var FallingEntity = function(world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight) 
 {
     Entity.call(this,world,x, y,id,assetType,keysUp, keysDown, keysLeft, keysRight);
+
+    this.isFalling = false;
+
+    this.fallingSound = null;
 
 
 
@@ -315,8 +200,32 @@ FallingEntity.prototype.moveDown = function()
     switch(tile.tileType)
     {
       case AssetsType.background:
-        Entity.prototype.moveDown.call(this,1);
+        if(this.world.player.xpos == this.xpos && this.world.player.ypos == this.ypos + 1)
+        {
+          if(this.isFalling)
+          {
+            // game over here
+            this.world.onFailInternal();
+            
+
+          }
+
+        }
+        else
+        {
+          var self = this;
+          Entity.prototype.moveDown.call(this,1,function () {
+              if(self.world.worldMap.checkTileType(self.xpos,self.ypos + 1,AssetsType.dirt))
+                  self.fallingSound.play();
+            });
+          this.isFalling = true;
+
+          
+
+        }
       break;
+      default:
+        this.isFalling = false;
     }
 }
 
@@ -335,6 +244,7 @@ FallingEntity.prototype.moveLeft = function()
     switch(tile.tileType)
     {
       case AssetsType.background:
+        this.world.entityManager.transferEntity(this,this.xpos - 1);
         Entity.prototype.moveLeft.call(this,1);
       break;
     }
@@ -352,6 +262,7 @@ FallingEntity.prototype.moveRight = function()
     switch(tile.tileType)
     {
       case AssetsType.background:
+        this.world.entityManager.transferEntity(this,this.xpos + 1);
         Entity.prototype.moveRight.call(this,1);
       break;
     }
@@ -363,6 +274,8 @@ FallingEntity.prototype.moveRight = function()
 var Rock  = function (world, x, y)
 {
     FallingEntity.call(this,world,x,y,"rock" + x + "-" + y,AssetsType.rock);
+
+    this.fallingSound = new Sound(SoundSrc.rockFalling);
 }
 
 Rock.prototype = Object.create(FallingEntity.prototype);
@@ -371,10 +284,12 @@ Rock.prototype.constructor = Rock.constructor;
 
 
 
-var Diamond  = function (world, x, y)
+var Diamond  = function (world, x, y,value)
 {
     FallingEntity.call(this,world,x,y,"diamond" + x + "-" + y,AssetsType.diamond);
-    this.diamondValue = 1;
+    this.diamondValue = value || 1;
+
+    this.fallingSound = new Sound(SoundSrc.diamondFalling);
 }
 
 Diamond.prototype = Object.create(FallingEntity.prototype);
