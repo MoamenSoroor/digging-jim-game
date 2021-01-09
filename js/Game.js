@@ -122,7 +122,7 @@ function Game(maps) {
         this.world.start();
     }
 
-    this.gameWon = function (score) {
+    this.gameWon = function (score = 0) {
         this.world.stop();
         this.mapId++;
         this.score += score;

@@ -30,7 +30,7 @@ const HomeScreen = {
                 if (/^(sc-)/i.test(ck) == true) {
                     allScores.push({
                         key: ck.substr(3),
-                        value: allCookies[ck]
+                        value: parseInt(allCookies[ck])
                     });
                 }
             }
