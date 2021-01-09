@@ -216,8 +216,8 @@ AnimateMove.prototype.playX = function(dx,durationX,onFinish){
                 self.isPlayX = false;
                 if(onFinish != undefined && onFinish != null)
                     onFinish();
-                else
-                    console.log("on finish is null ");
+                // else
+                //     console.log("on finish is null ");
             }
 
         }, FrameTime,onFinish);
@@ -252,8 +252,8 @@ AnimateMove.prototype.playY = function(dy,durationY,onFinish){
                 self.isPlayY = false;
                 if(onFinish != undefined && onFinish != null)
                     onFinish();
-                else
-                console.log("on finish is null ");
+                //else
+                //console.log("on finish is null ");
             }
 
         }, FrameTime,onFinish);

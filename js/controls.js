@@ -78,7 +78,7 @@ var controls = {
             }    
             else
             {
-                console.log(e.key);
+                //console.log(e.key);
             }
                 
           }
@@ -86,23 +86,23 @@ var controls = {
 
     onKeyDown: function ()
     {
-        console.log("on key down not registerd.");
+        //console.log("on key down not registerd.");
     },
     onKeyUp: function ()
     {
-        console.log("on key up not registerd.");
+        //console.log("on key up not registerd.");
     },
     onKeyLeft: function ()
     {
-        console.log("on key left not registerd.");
+        //console.log("on key left not registerd.");
     },
     onKeyRight: function ()
     {
-        console.log("on key right not registerd.");
+        //console.log("on key right not registerd.");
     },
     onKeyPause: function () 
     {
-        console.log("key pause pressed");
+        //console.log("key pause pressed");
     },
 
     unRegisterControls: function ()

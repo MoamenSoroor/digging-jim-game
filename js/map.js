@@ -54,7 +54,7 @@ WorldMap.prototype.drawWorldMap = function (world) {
 
 
         default:
-          console.log("asset type " + this.map[i][j]);
+          //console.log("asset type " + this.map[i][j]);
           throw new Error("Error: asset is not exists");
       }
 
@@ -129,7 +129,7 @@ WorldMap.prototype.checkTileType = function (xpos, ypos, tileType) {
 
 
 WorldMap.prototype.getTile = function (xpos, ypos) {
-  console.log(xpos, ypos);
+  //console.log(xpos, ypos);
   if (xpos < this.width && ypos < this.height && xpos >= 0 && ypos >= 0)
     return new Tile(xpos, ypos, this.map[ypos][xpos]);
   else
