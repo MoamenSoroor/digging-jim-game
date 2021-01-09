@@ -102,9 +102,10 @@ function Sound(src) {
 
   this.play = function () {
     try {
+      this.sound = dom.createSound(src);
       this.sound.play();
     } catch (error) {
-      console.log("waring can't play sound");
+      console.log("warning can't play sound");
     }
   }
   this.stop = function () {
