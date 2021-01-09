@@ -27,11 +27,15 @@ World.prototype.stop = function ()
 {
   this.isWorldStop = true; 
   this.entityManager.stop();
+  this.onStop();
 }
 
-World.prototype.continue = function()
+// this for playing world after pausing it with p key
+World.prototype.play = function()
 {
   this.isWorldStop = false; 
+  this.entityManager.play();
+  this.onPlay();
 }
 
 World.prototype.start = function()
@@ -39,7 +43,8 @@ World.prototype.start = function()
   var self = this;
   this.worldMap.drawWorldMap(this);
   this.player = this.worldMap.player;
-  this.entityManager.initEntityManager();
+  this.isWorldStop = false; 
+  this.entityManager.play();
   
 
   this.controls.onKeyUp = function () {
@@ -69,14 +74,25 @@ World.prototype.start = function()
     }
   }
 
+  this.controls.onKeyPause = function () {
+    if(self.isWorldStop)
+      self.play();
+    else
+      self.stop();
+  }
+
 }
 
 
-World.prototype.moveScrollBar = function()
-{
- 
-}
+// World.prototype.checkTile = function(xpos,ypos,tileType)
+// {
+//   return this.worldMap.checkTileType(xpos,ypos,tileType);
+// }
 
+// World.prototype.getTile = function(xpos,ypos,tileType)
+// {
+//   return this.worldMap.getTile(xpos,ypos);
+// }
 
 World.prototype.onWinInternal = function ()
 {
@@ -136,6 +152,25 @@ World.prototype.onEatDiamondInternal = function(value)
   this.onEatDiamond(value);
   
 } 
+
+
+
+
+World.prototype.moveScrollBar = function()
+{
+ 
+}
+
+World.prototype.onStop = function () {
+
+}
+
+World.prototype.onPlay = function () {
+
+}
+
+
+
 
 
 World.prototype.onWin = function ()

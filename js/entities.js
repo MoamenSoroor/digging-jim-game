@@ -163,165 +163,6 @@ Entity.prototype.isMovingY = function()
 }
 
 
-
-
-var Player  = function (world, x, y)
-{
-    Entity.call(this,world,x,y,"player",AssetsType.character);
-
-    this.moveSound = new Sound(SoundSrc.moveChar);
-    this.eatCoinsSound = new Sound(SoundSrc.eatCoins);
-    this.winSound = new Sound(SoundSrc.win);
-    this.loseSound = new Sound(SoundSrc.lose);
-
-    // this.keysUp = ["","",""];
-    // this.keysDown = ["","",""];
-    this.keysLeft   = [Assets.getSrc(AssetsType.CharL1)];
-    this.keysRight = [Assets.getSrc(AssetsType.CharR1)];
-    this.keysDown = [Assets.getSrc(AssetsType.character)];
-    this.keysUp = [Assets.getSrc(AssetsType.character)];
-}
-
-Player.prototype = Object.create(Entity.prototype);
-
-Player.prototype.constructor = Player.constructor;
-
-
-
-Player.prototype.moveToDirection = function(direction,onFinish)
-{
-    //Entity.prototype.moveToDirection.call(this,direction,1,onFinish);
-
-    switch(direction)
-    {
-      case Direction.UP:
-        this.moveUp(onFinish);
-      break;
-      case Direction.DOWN:
-        this.moveDown(onFinish);
-        
-      break;
-      case Direction.LEFT:
-        this.moveLeft(onFinish);
-      break;
-      case Direction.RIGHT:
-        this.moveRight(onFinish);
-      break;
-  
-      default: 
-        throw new Error("Not Valid Direction");
-      break;
-    }
-}
-
-
-Player.prototype.moveUp = function(onFinish)
-{
-    if(this.direction == Direction.None) this.direction = Direction.UP;
-
-    if(this.isMovingY() && (Direction.UP || Direction.DOWN))
-        return;
-
-    
-    var tile = this.world.worldMap.getTile(this.xpos, this.ypos - 1);
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        Entity.prototype.moveUp.call(this,1,onFinish);
-      break;
-      case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);    
-        Entity.prototype.moveUp.call(this,1,onFinish);   
-        this.moveSound.play();
-      break;
-      case AssetsType.door:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
-        Entity.prototype.moveUp.call(this,1,onFinish);
-        this.world.onWinInternal();
-      break;
-    }
-
-}
-
-
-Player.prototype.moveDown = function(onFinish)
-{
-    if(this.direction == Direction.None) this.direction = Direction.DOWN;
-
-    if(this.isMovingY() && (Direction.UP || Direction.DOWN))
-        return;
-
-    
-    var tile = this.world.worldMap.getTile(this.xpos, this.ypos + 1);
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        Entity.prototype.moveDown.call(this,1,onFinish);
-      break;
-      case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);     
-        Entity.prototype.moveDown.call(this,1,onFinish);  
-        this.moveSound.play();
-      break;
-      case AssetsType.door:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
-        Entity.prototype.moveDown.call(this,1,onFinish);
-        this.world.onWinInternal();
-      break;
-    }
-}
-
-Player.prototype.moveLeft = function(onFinish)
-{
-    if(this.isMovingX() && (Direction.LEFT || Direction.RIGHT))
-        return;
-    if(this.direction == Direction.None) this.direction = Direction.LEFT;
-    
-    var tile = this.world.worldMap.getTile(this.xpos - 1, this.ypos );
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        Entity.prototype.moveLeft.call(this,1,onFinish);
-      break;
-      case AssetsType.dirt:
-          this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);       
-          Entity.prototype.moveLeft.call(this,1,onFinish);
-          this.moveSound.play();
-      break;
-      case AssetsType.door:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
-        Entity.prototype.moveLeft.call(this,1,onFinish);
-        this.world.onWinInternal();
-      break;
-    }
-}
-
-Player.prototype.moveRight = function(onFinish)
-{
-    if(this.direction == Direction.None) this.direction = Direction.RIGHT;
-    if(this.isMovingX() && (Direction.LEFT || Direction.RIGHT))
-        return;
-    
-    var tile = this.world.worldMap.getTile(this.xpos + 1, this.ypos );
-    switch(tile.tileType)
-    {
-      case AssetsType.background:
-        Entity.prototype.moveRight.call(this,1,onFinish);
-      break;
-      case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);      
-        Entity.prototype.moveRight.call(this,1,onFinish); 
-        this.moveSound.play();
-      break;
-      case AssetsType.door:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
-        Entity.prototype.moveRight.call(this,1,onFinish);
-        this.world.onWinInternal();
-      break;
-    }
-}
-
-
 // rock
 
 
@@ -363,6 +204,7 @@ FallingEntity.prototype.moveDown = function()
         {
           if(this.isFalling)
           {
+            // game over here
             this.world.onFailInternal();
             
 
@@ -402,6 +244,7 @@ FallingEntity.prototype.moveLeft = function()
     switch(tile.tileType)
     {
       case AssetsType.background:
+        this.world.entityManager.transferEntity(this,this.xpos - 1);
         Entity.prototype.moveLeft.call(this,1);
       break;
     }
@@ -419,6 +262,7 @@ FallingEntity.prototype.moveRight = function()
     switch(tile.tileType)
     {
       case AssetsType.background:
+        this.world.entityManager.transferEntity(this,this.xpos + 1);
         Entity.prototype.moveRight.call(this,1);
       break;
     }

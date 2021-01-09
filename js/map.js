@@ -27,6 +27,12 @@ WorldMap.prototype.drawWorldMap = function (world)
             case AssetsType.door: 
                 ui.createTile(new Tile(j,i,AssetsType.door));
             break;
+            case AssetsType.tubeLF: 
+                ui.createTile(new Tile(j,i,AssetsType.tubeLF,2));
+            break;
+            case AssetsType.tubeUD: 
+                ui.createTile(new Tile(j,i,AssetsType.tubeUD,2));
+            break;
             case AssetsType.character: 
                 ui.createTile(new Tile(j,i,AssetsType.background));
                 this.map[i][j] = AssetsType.background;
@@ -109,11 +115,16 @@ WorldMap.prototype.updateTileTo = function(xpos,ypos,tileType,duration)
 
 WorldMap.prototype.checkTileType = function(xpos,ypos,tileType)
 {
-  return this.getTile(xpos,ypos).tileType == tileType;
+  if(xpos < this.width && ypos < this.height)
+    return this.map[ypos][xpos] === tileType;
 }
 
 
 WorldMap.prototype.getTile = function(xpos,ypos)
 {
-  return new Tile(xpos,ypos, this.map[ypos][xpos]);
+  console.log(xpos,ypos);
+  if(xpos < this.width && ypos < this.height && xpos >= 0 && ypos >= 0)
+    return new Tile(xpos,ypos, this.map[ypos][xpos]);
+  else
+    return false;
 }

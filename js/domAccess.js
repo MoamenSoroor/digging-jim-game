@@ -93,6 +93,8 @@ const ui =
         var pos = this.positionToPixels(tile);
         console.log(pos);
         var im = dom.createImg(tile.src, id, pos.pixelX, pos.pixelY,Tile.tileWidth, Tile.tileHeight);
+        if(tile.zindex != null && tile.zindex != undefined)
+            im.style.zIndex = tile.zindex;
         dom.addImage(im);
     },
 

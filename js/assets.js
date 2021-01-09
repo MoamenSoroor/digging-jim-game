@@ -23,6 +23,8 @@ const AssetsType = {
     CharR1: 8,
     CharL1: 9,
     lose: 10,
+    tubeUD: 11, // up down tube
+    tubeLF: 12, // left right tube
   };
   
   const AssetsSrc = {
@@ -37,6 +39,8 @@ const AssetsType = {
     8: "images/R1.png",
     9: "images/L1.png",
     10: "images/lose.gif",
+    11: "images/tube1.png",
+    12: "images/tube1LR.png",
 
     "images/background.png" : 0,
     "images/Sand.png" : 1,
@@ -44,11 +48,13 @@ const AssetsType = {
     "images/rock.png" : 3,
     "images/Diamond.png" : 4,
     "images/1.png" : 5,
-    "images/door.jpg" : 6,
+    "images/exit.gif" : 6,
     "images/opendoor.png": 7,
     "images/R1.png": 8,
     "images/L1.png": 9,
-    "images/lose.gif": 10
+    "images/lose.gif": 10,
+    "images/tube1.png" : 11 ,
+    "images/tube1LR.png" : 12 ,
 
   };
 
@@ -62,9 +68,9 @@ Assets.getSrc = function(type)
 {
 
     if(AssetsSrc[type] != undefined && AssetsSrc[type] != null )
-    return AssetsSrc[type];
+      return AssetsSrc[type];
     else
-    throw new Error("Error: the Assets type is not exists");
+      throw new Error("Error: the Assets type is not exists, assets type: " + type);
 
 }
     
@@ -85,6 +91,7 @@ const SoundSrc = {
   diamondFalling: "WAVE/120.wav",
   win: "WAVE/133.wav",
   lose: "WAVE/118.wav",
+  tubeSound: "WAVE/141.wav",
 
 }
 
@@ -95,7 +102,11 @@ function Sound(src) {
 
   this.play = function()
   {
-    this.sound.play();
+    try {
+      this.sound.play();
+    } catch (error) {
+      console.log("waring can't play sound");
+    }
   }
   this.stop = function()
   {
