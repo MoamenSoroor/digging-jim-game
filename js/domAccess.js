@@ -79,15 +79,15 @@ const ui =
     createTile: function (tile) {
         var id = idManager.createId(tile.xpos, tile.ypos);
         var pos = this.positionToPixels(tile);
-        console.log(pos);
+        // console.log(pos);
         var im = dom.createImg(tile.src, id, pos.pixelX, pos.pixelY, Tile.tileWidth, Tile.tileHeight);
         dom.addImage(im);
     },
 
     updateTile: function (tile) {
-        console.log(tile);
+        // console.log(tile);
         var id = idManager.createId(tile.xpos, tile.ypos);
-        console.log("id = " + id);
+        // console.log("id = " + id);
         dom.getImage(id).src = tile.src;
     },
 

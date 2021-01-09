@@ -49,6 +49,12 @@
             z-index: 10;
         }
 
+        #winAll {
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
         #startHome {
             display: none;
         }
@@ -58,9 +64,9 @@
             vertical-align: bottom;
         } */
 
-        /* ::-webkit-scrollbar {
+        ::-webkit-scrollbar {
             display: none;
-        } */
+        }
     </style>
 </head>
 
@@ -72,13 +78,13 @@
         <!-- Start -->
         <div id='div'>
             <div id='header'>
-                <img src="Images/beforeStart/logo.jpg" id="logo">
+                <img src="resources/images/beforeStart/logo.jpg" id="logo">
             </div>
             <h3><button type='button' class="main" id='newgame'>LET'S BEGIN</button></h3>
             <h3><button type='button' class="main" id='dashbord'>HIGHEST SCORES</button></h3>
             <h3><button type='button' class="main" id='aboutus'>ABOUT US</button></h3>
             <h3><button type='button' class="main" id='exit'>EXIT</button></h3>
-            <img src="Images/beforeStart/download.jfif" id="jim">
+            <img src="resources/images/beforeStart/download.jfif" id="jim">
         </div>
 
         <!-- LET'S BEGIN-->
@@ -97,7 +103,7 @@
         <!-- LET'S GO-->
         <div id="load">
             <h1 id="txt">Loading...</h1>
-            <img src="Images/beforeStart/jimm.PNG" id="boy">
+            <img src="resources/images/beforeStart/jimm.PNG" id="boy">
             <div id="myProgress">
                 <div id="myBar"></div>
             </div>
@@ -159,21 +165,55 @@
 
     <div id="gameLost">
         <div id="button">
-            <span id="Restart">Restart</span>
+            <span id="Restart2">Restart</span>
             <span id="CloseLost">Close</span>
         </div>
     </div>
 
     <div id="gameOver">
-        <p id="pGame">Game Over</p>
+        <p id="pGame" style="text-align: center;">
+            <span>Game Over</span>
+            <br>
+            <br>
+            <span id="Gname"> </span>
+            <br>
+            <span>Score: </span><span id="score"></span>
+        </p>
+        <!-- <p class="pGame2">
+            
+        </p> -->
+
+        <div id="button">
+            <span id="restart">Restart</span>
+            <span id="exitGame">Exit</span>
+        </div>
     </div>
+
+    <div id="winAll">
+        <div id="winA" style="text-align: center;">
+            <img style="
+            height: 150px;
+            width: 150px;" 
+            src="resources/images/King2.png" alt="">
+            <p id="pGame2" style="text-align: center;">
+                <span id="span5">Score</span>
+                <br>
+                <span id="span6"></span>
+            </p>
+            <div id="button2">
+                <span id="restart_01">Restart</span>
+                <span id="exitGame_01">Exit</span>
+            </div>
+        </div>
+    </div>
+
+
 
     <div id="footer">
         <span class="badge" style="background-color: darkgray;">Score</span>
         <span class="badge" id="score" style="background-color: darkgray;">0</span>
         <span class="badge" style="background-color: darkgray;">Lives</span>
         <span class="badge" id="lifes" style="background-color: darkgray;">3</span>
-        <img src="/images/1.png" style="width: 25px; height: 25px">
         <span class="badge" style="background-color: darkgray;">Level</span>
         <span class="badge" id="level" style="background-color: darkgray;  vertical-align:middle;">1</span>
     </div>

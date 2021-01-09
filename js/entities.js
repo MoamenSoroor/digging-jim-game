@@ -102,7 +102,7 @@ Entity.prototype.moveUp = function(dy,onFinish)
     if(!this.isMovingY())
     {
         this.direction = Direction.UP;
-        console.log(this);
+        // console.log(this);
         this.ypos -= dy;
         this.image.moveY(this.duration, Entity.toPixelY( -1 * dy) , this.keysUp,onFinish);
     }

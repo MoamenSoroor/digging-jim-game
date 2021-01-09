@@ -33,9 +33,9 @@ const AssetsSrc = {
   4: "resources/images/diamond.gif",
   5: "resources/images/character2.png",
   6: "resources/images/door.png",
-  7: "images/openDoor.jpg",
-  8: "images/R1.png",
-  9: "images/L1.png",
+  7: "resources/images/openDoor.jpg",
+  8: "resources/images/R1.png",
+  9: "resources/images/L1.png",
 
   "resources/images/black.png": 0,
   "resources/images/dirtback.gif": 1,
@@ -44,9 +44,9 @@ const AssetsSrc = {
   "resources/images/diamond.gif": 4,
   "resources/images/character2.png": 5,
   "resources/images/door.png": 6,
-  "images/openDoor.jpg": 7,
-  "images/R1.png": 8,
-  "images/L1.png": 9,
+  "resources/images/openDoor.jpg": 7,
+  "resources/images/R1.png": 8,
+  "resources/images/L1.png": 9,
 };
 
 

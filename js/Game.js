@@ -7,11 +7,20 @@ function Game(maps) {
     this.mapId = -1;
     this.score = 0;
     this.playerName = "";
-    HomeScreen.inititalize();
+    HomeScreen.initialize();
+
+    (function (obj) {
+        window.onresize = function () {
+            if (obj.world !== null && obj.world.player !== null && !obj.world.isWorldStop) {
+                obj.world.moveScrollBar();
+            }
+        }
+    })(this);
 
     (function (obj) {
         var Continue = document.getElementById("Continue");
         Continue.onclick = function () {
+            obj.setLevelOnBar(obj.mapId + 1);
             $("#nextMap").hide();
             obj.world.end();
             obj.startGame();
@@ -27,7 +36,7 @@ function Game(maps) {
     })(this);
 
     (function (obj) {
-        var Restart = document.getElementById("Restart");
+        var Restart = document.getElementById("Restart2");
         Restart.onclick = function () {
             $("#gameLost").hide();
             obj.world.end();
@@ -44,6 +53,37 @@ function Game(maps) {
         }
     })(this);
 
+
+    (function (obj) {
+        var exitGame = document.getElementById("exitGame");
+        exitGame.onclick = function () {
+            window.close();
+        }
+    })(this);
+
+    (function (obj) {
+        var exitGame_01 = document.getElementById("exitGame_01");
+        exitGame_01.onclick = function () {
+            window.close();
+        }
+    })(this);
+
+    (function (obj) {
+        var restartAtGameOver = document.getElementById("restart");
+        restartAtGameOver.onclick = function () {
+            $("#gameOver").hide();
+            obj.reset();
+        }
+    })(this);
+
+
+    (function (obj) {
+        var restartAtGameOver_01 = document.getElementById("restart_01");
+        restartAtGameOver_01.onclick = function () {
+            $("#winAll").hide();
+            obj.reset();
+        }
+    })(this);
 
 
     this.showHomeScreen = function () {
@@ -86,8 +126,10 @@ function Game(maps) {
         this.world.stop();
         this.mapId++;
         this.score += score;
+        this.setScoreOnBar(this.score);
         if (this.mapId == this.maps.length) {
-            this.wonAllDiv(this.name, this.score);
+            window.clib.setCookie(`sc-${this.playerName}`, this.score);
+            this.wonAllDiv(this.score);
         } else {
             this.nextMapDiv();
         }
@@ -97,7 +139,8 @@ function Game(maps) {
         this.lives--;
         this.setLivesOnBar(this.lives);
         if (this.lives == 0) {
-            this.gameOverDiv(this.name, this.score);
+            window.clib.setCookie(`sc-${this.playerName}`, this.score);
+            this.gameOverDiv(this.playerName, this.score);
         } else {
             this.playAgainDiv();
         }
@@ -106,19 +149,26 @@ function Game(maps) {
 
 
     this.playAgainDiv = function () {
+        window.scrollTo(0, 0);
         $("#gameLost").show();
     }
 
     this.nextMapDiv = function () {
         $("#nextMap").show();
+        window.scrollTo(0, 0);
     }
 
-    this.gameOverDiv = function (score) {
+    this.gameOverDiv = function (nm, score) {
+        window.scrollTo(0, 0);
+        document.getElementById("Gname").innerHTML = nm;
+        document.getElementById("score").innerHTML = score;
         $("#gameOver").show();
     }
 
     this.wonAllDiv = function (score) {
-        $("#gameOver").show();
+        window.scrollTo(0, 0);
+        $("#winAll").show();
+        document.getElementById("span6").innerHTML = score;
     }
 
     this.hidebar = function () {

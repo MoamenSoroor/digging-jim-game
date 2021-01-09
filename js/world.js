@@ -76,12 +76,14 @@ World.prototype.start = function () {
 
 
 World.prototype.moveScrollBar = function () {
-  var tx, ty;
-  var scrX = Math.floor(window.innerWidth / Entity.width);
-  var scrY = Math.floor(window.innerHeight / Entity.height);;
-  tx = (this.player.xpos - Math.floor(scrX / 2)) * Entity.width;
-  ty = (this.player.ypos - Math.floor(scrY / 2)) * Entity.height;
-  window.scrollTo(tx, ty);
+  if(!this.isWorldStop){
+    var tx, ty;
+    var scrX = Math.floor(window.innerWidth / Entity.width);
+    var scrY = Math.floor(window.innerHeight / Entity.height);;
+    tx = (this.player.xpos - Math.floor(scrX / 2)) * Entity.width;
+    ty = (this.player.ypos - Math.floor(scrY / 2)) * Entity.height;
+    window.scrollTo(tx, ty);
+  }
 }
 
 
@@ -92,12 +94,10 @@ World.prototype.onWin = function () {
 
 
 World.prototype.onFail = function () {
-  this.game.lose();
+  this.game.gameLose();
 }
 
 World.prototype.onEatDiamond = function (value) {
-  console.log("diamond has been eaten");
-  console.log(value);
   this.score += value;
   this.game.setScoreOnBar(this.score + this.game.score);
   audio(AudioType.takeCoin);

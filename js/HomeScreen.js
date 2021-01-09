@@ -1,8 +1,20 @@
 
 const HomeScreen = {
-    inititalize: function () {
+    initialize: function () {
+
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+
+        document.addEventListener("mousewheel", function (eve) {
+            eve.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener("touchmove", function (eve) {
+            eve.preventDefault();
+        }, { passive: false });
+
         var obj = this;
-        console.log('initializeGame');
         document.getElementById('newgame').onclick = function () {
             obj.hideAll();
             document.getElementById("popupUserName").style.display = "block";
@@ -15,7 +27,6 @@ const HomeScreen = {
             var allCookies = clib.allCookieList();
             var allScores = [];
             for (ck in allCookies) {
-                console.log(ck);
                 if (/^(sc-)/i.test(ck) == true) {
                     allScores.push({
                         key: ck.substr(3),
@@ -39,7 +50,7 @@ const HomeScreen = {
         };
 
         document.getElementById('aboutus').onclick = function () {
-            this.hideAll();
+            obj.hideAll();
             document.getElementById("popupAboutus").style.display = "block";
         }
 
@@ -48,7 +59,7 @@ const HomeScreen = {
         };
 
         document.getElementById('exit').onclick = function () {
-            this.hideAll();
+            obj.hideAll();
             document.getElementById("exitPopUp").style.display = "block";
             document.getElementById("no").onclick = function () { document.getElementById("exitPopUp").style.display = "none"; };
             document.getElementById("yes").onclick = function () { window.close(); };
@@ -74,7 +85,6 @@ const HomeScreen = {
                     document.getElementById("popupUserName").style = "animation: goup 1s; display:none;";
                     document.getElementById("startHome").style.display = "none";
                     game.initializeGame(Name);
-                    console.log('start');
                     break;
                 case 5:
                     document.getElementById("temp").innerHTML = "NAME SHOULD BE 5 CHARACTER AT LEAST!!";
@@ -106,7 +116,7 @@ const HomeScreen = {
         document.getElementById("pName").value = "";
         document.getElementById("startHome").style.display = "block";
     },
-    hideHomeScreen: function() {
+    hideHomeScreen: function () {
         document.getElementById("startHome").style.display = "none";
     }
 }

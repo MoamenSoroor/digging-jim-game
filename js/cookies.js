@@ -73,8 +73,24 @@
             // return null;
         }
 
-
     }
+
+    clib.removeAllCookies = function () {
+        if (arguments.length != 0) {
+            throw exp3;
+        }
+        var str = document.cookie;
+        var regex = `(^|;)\\s*([^=]+)\\s*=\\s*([^;]+)`;
+        var re = new RegExp(regex, 'g');
+        var retArr = [];
+        var myArray;
+        while (myArray = re.exec(str)) {
+            var key = myArray[2];
+            document.cookie = `${key}= ; expires = Thu, 01 Jan 1970 00:00:00 GMT`;
+        }
+        return retArr;
+    }
+
 
     clib.allCookieList = function () {
         if (arguments.length != 0) {

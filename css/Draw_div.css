@@ -1,7 +1,7 @@
-#gameLost,#nextMap{
+#gameLost, #nextMap, #winAll {
     height: 500px;
     width: 600px;
-    background-image:url("/Images/135.bmp");
+    background-image: url("../resources/images/135.bmp");
     background-repeat: no-repeat;
     background-size: 600px 500px;
     background-position: center;
@@ -9,10 +9,9 @@
     margin-top: 110px;
 }
 
-#Restart{
-
-    height: 50px; 
-    width: 100px; 
+#Restart2 {
+    height: 50px;
+    width: 100px;
     position: relative;
     display: block;
     font-size: 35px;
@@ -20,10 +19,10 @@
     color: blueviolet;
 }
 
-#CloseLost{
+#CloseLost {
     height: 50px;
-    width:100px;
-    position:relative;
+    width: 100px;
+    position: relative;
     display: block;
     font-size: 35px;
     font-family: cursive;
@@ -34,16 +33,15 @@
     color: rgb(222, 238, 1);
     cursor: pointer;
 } */
-#CloseLost:hover,#Continue:hover,#Restart:hover,#CloseWin:hover{
+
+#exitGame_01:hover, #restart_01:hover, #restart:hover, #exitGame:hover, #CloseLost:hover, #Continue:hover, #Restart2:hover, #CloseWin:hover {
     color: rgb(222, 238, 1);
     cursor: pointer;
 }
 
-#Continue
-{
-    
-    height: 50px; 
-    width: 100px; 
+#Continue {
+    height: 50px;
+    width: 100px;
     position: relative;
     display: block;
     font-size: 35px;
@@ -51,59 +49,66 @@
     color: blueviolet;
 }
 
-#CloseWin
-{
+#CloseWin {
     height: 50px;
-    width:100px;
-    position:relative;
+    width: 100px;
+    position: relative;
     display: block;
     font-size: 35px;
     font-family: cursive;
     color: blueviolet;
-
 }
-/* #span4:hover
-{
-    color: rgb(222, 238, 1);
-    cursor: pointer;
-}
-#span3:hover
-{
-    color: rgb(222, 238, 1);
-    cursor: pointer;
-} */
 
-/* #nextMap
-{
-    height:500px;
-    width:600px;
-    background-image:url("/Images/135.bmp");
-    background-repeat: no-repeat;
-    background-size: 600px 500px;
-    background-position: center;
-    margin: auto;
-    margin-top: 110px;
-} */
-#nextM{
+#nextM {
     height: 70%;
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
 }
 
-#button{
+#restart, #restart_01 {
+    height: 50px;
+    width: 100px;
+    position: relative;
+    bottom: 20px;
+    display: block;
+    font-size: 35px;
+    font-family: cursive;
+    color: blueviolet;
+}
+
+#exitGame, #exitGame_01 {
+    height: 50px;
+    width: 100px;
+    position: relative;
+    bottom: 20px;
+    display: block;
+    font-size: 35px;
+    font-family: cursive;
+    color: blueviolet;
+}
+
+#button {
     height: 70%;
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
 }
 
-#footer{
+#button2 {
+    height: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+#footer {
     position: fixed;
-    bottom:0px;
+    /* padding-top: 1%; */
+    bottom: 0px;
     width: 100%;
     height: 30px;
-    border: 1px solid ;
+    border: 1px solid;
     background-color: rgb(49, 35, 99);
     text-align: center;
 }
@@ -111,38 +116,39 @@
 .badge {
     display: inline-block;
     min-width: 10px;
-    padding:3px 7px;
-    font-size: 12px;
+    padding: 3px 7px;
+    /* font-size: 12px; */
     font-weight: 900;
-    line-height: 1;
+    /* line-height: 1; */
     color: #fff;
     text-align: center;
     white-space: nowrap;
     background-color: rgb(226, 226, 226);
     border-radius: 10px;
-    vertical-align: middle;
-    position: relative;
-    bottom: 6px;
-    
+    /* vertical-align: middle; */
+    /* position: relative; */
+    /* bottom: 6px; */
 }
-#gameOver{
+
+#gameOver {
     height: 500px;
     width: 600px;
-    background-image:url("/Images/135.bmp");
+    background-image: url("../resources/images/135.bmp");
     background-repeat: no-repeat;
     background-size: 600px 500px;
     background-position: center;
     margin: auto;
     margin-top: 110px;
 }
-#pGame{
+
+#pGame, #pGame2 {
     height: 50px;
-    position:relative;
-    margin: auto;
-    top: 180px;
-    left: 125px;
+    /* position: relative; */
+    /* margin: auto; */
+    /* top: 80px; */
+    /* left: 125px; */
     font-size: 70px;
     font-family: cursive;
-    color:rgb(241, 245, 4);
+    color: rgb(241, 245, 4);
     text-shadow: 4px 4px #4b580d;
 }
