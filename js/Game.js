@@ -138,6 +138,7 @@ function Game(maps) {
     this.gameLose = function () {
         this.lives--;
         this.setLivesOnBar(this.lives);
+        this.setScoreOnBar(this.score);
         if (this.lives == 0) {
             window.clib.setCookie(`sc-${this.playerName}`, this.score);
             this.gameOverDiv(this.playerName, this.score);
