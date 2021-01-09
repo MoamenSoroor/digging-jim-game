@@ -35,7 +35,7 @@ const AssetsSrc = {
   3: "resources/images/rock.gif",
   4: "resources/images/diamond.gif",
   5: "resources/images/character2.png",
-  6: "resources/images/door.png",
+  6: "resources/images/exit.gif",
   7: "resources/images/openDoor.jpg",
   8: "resources/images/R1.png",
   9: "resources/images/L1.png",

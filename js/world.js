@@ -29,6 +29,15 @@ World.prototype.stop = function () {
   this.onStop();
 }
 
+
+World.prototype.pause = function () {
+  this.isWorldStop = true;
+  this.entityManager.stop();
+  this.onPause();
+}
+
+
+
 // this for playing world after pausing it with p key
 World.prototype.play = function () {
   this.isWorldStop = false;
@@ -80,7 +89,7 @@ World.prototype.start = function () {
     if (self.isWorldStop)
       self.play();
     else
-      self.stop();
+      self.pause();
   }
 
 }
@@ -167,12 +176,17 @@ World.prototype.onEatDiamondInternal = function (value) {
 
 
 World.prototype.onStop = function () {
-  this.game.showPausedDiv();
+  //this.game.showPausedDiv();
 }
 
 World.prototype.onPlay = function () {
   this.game.hidePausedDiv();
 }
+
+World.prototype.onPause = function () {
+  this.game.showPausedDiv();
+}
+
 
 
 
