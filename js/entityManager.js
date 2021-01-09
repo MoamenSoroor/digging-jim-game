@@ -184,12 +184,12 @@ EntityManager.prototype.falling = function () {
             if(!this.hasEntity(value.xpos,value.ypos + 1))
             {
                 value.moveDown();
-                console.log("move down ");
+                // console.log("move down ");
 
             }
             else {
                 value.isFalling = false;
-                console.log("not falling");
+                // console.log("not falling");
                 
                 // right
                 if(!this.hasEntity(value.xpos + 1,value.ypos) 

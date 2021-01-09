@@ -40,7 +40,7 @@ var controls = {
             if(e.key == keys.UP || e.key == keys.W  || e.key == keys.w )
             {
                 e.preventDefault();
-                console.log(keys.UP);
+                // console.log(keys.UP);
                 self.isUPPressed = true;
                 self.onKeyUp();
 
@@ -48,7 +48,7 @@ var controls = {
             else if(e.key == keys.DOWN || e.key == keys.S  || e.key == keys.s)
             {
                 e.preventDefault();
-                console.log(keys.DOWN);
+                // console.log(keys.DOWN);
                 self.isDownPressed = true;
                 self.onKeyDown();
                 
@@ -57,7 +57,7 @@ var controls = {
             else if(e.key == keys.LEFT || e.key == keys.A  || e.key == keys.a)
             {
                 e.preventDefault();
-                console.log(keys.LEFT);
+                // console.log(keys.LEFT);
                 self.isLeftPressed = true;
                 self.onKeyLeft();
             }    
@@ -65,14 +65,14 @@ var controls = {
             else if(e.key == keys.RIGHT|| e.key == keys.D  || e.key == keys.d)
             {
                 e.preventDefault();
-                console.log(keys.RIGHT);
+                // console.log(keys.RIGHT);
                 self.isRightPressed = true;
                 self.onKeyRight();
             }    
                 
             else if(e.key == keys.P|| e.key == keys.p  || e.key == keys.d) 
             {
-                console.log(e.key);
+                // console.log(e.key);
                 self.onKeyPause();
                 
             }    
