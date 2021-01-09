@@ -1,10 +1,11 @@
 
   
-  var Tile = function (x, y,assetType)
+  var Tile = function (x, y,assetType,zindex)
   {
     this.xpos = x;
     this.ypos = y;
     this.tileType = assetType;
+    this.zindex = zindex || 0;
     this.src = Assets.getSrc(assetType);
   
   }

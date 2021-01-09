@@ -4,16 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
+    <title>Digging Jim Game</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
         integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="css/beforeStart.css">
-    <!-- <link rel="stylesheet" href="css/styles.css"> -->
-    <!-- <link rel="stylesheet" href="css/hit.css"> -->
     <link rel="stylesheet" href="css/Draw_div.css">
-    <!-- <link rel="stylesheet" href="css/styles.css"> -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
 
     <style>
         /* .container{
@@ -73,19 +71,20 @@
 <body id="myBody">
 
 
-    <div tabindex="0" id="startHome">
+    <div id="startHome" style="height: 100vh; width: 100vh;">
 
         <!-- Start -->
-        <div id='div'>
-            <div id='header'>
-                <img src="resources/images/beforeStart/logo.jpg" id="logo">
-            </div>
+
+        <div id='header'>
+            <img src="resources/images/beforeStart/logo.jpg" id="logo">
+        </div>
+        <div id='div' style="display: inline-block;">
             <h3><button type='button' class="main" id='newgame'>LET'S BEGIN</button></h3>
             <h3><button type='button' class="main" id='dashbord'>HIGHEST SCORES</button></h3>
             <h3><button type='button' class="main" id='aboutus'>ABOUT US</button></h3>
             <h3><button type='button' class="main" id='exit'>EXIT</button></h3>
-            <img src="resources/images/beforeStart/download.jfif" id="jim">
         </div>
+        <img src="resources/images/beforeStart/download.jfif" id="jim">
 
         <!-- LET'S BEGIN-->
         <div id="popupUserName">
@@ -100,14 +99,6 @@
             </div>
         </div>
 
-        <!-- LET'S GO-->
-        <div id="load">
-            <h1 id="txt">Loading...</h1>
-            <img src="resources/images/beforeStart/jimm.PNG" id="boy">
-            <div id="myProgress">
-                <div id="myBar"></div>
-            </div>
-        </div>
 
         <!--High Score-->
         <div id="highestScorePOPUP">
@@ -193,8 +184,7 @@
         <div id="winA" style="text-align: center;">
             <img style="
             height: 150px;
-            width: 150px;" 
-            src="resources/images/King2.png" alt="">
+            width: 150px;" src="resources/images/King2.png" alt="">
             <p id="pGame2" style="text-align: center;">
                 <span id="span5">Score</span>
                 <br>
@@ -230,11 +220,11 @@
     <script src="js/cookies.js"></script>
     <script src="js/maps.js"></script>
     <script src="js/assets.js"></script>
-    <script src="js/audio.js"></script>
     <script src="js/domAccess.js"></script>
     <script src="js/animation.js"></script>
     <script src="js/tiles.js"></script>
     <script src="js/entities.js"></script>
+    <script src="js/player.js"></script>
     <script src="js/entityManager.js"></script>
     <script src="js/map.js"></script>
     <script src="js/controls.js"></script>

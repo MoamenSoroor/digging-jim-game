@@ -22,9 +22,10 @@ EntityManager.prototype.onMovingPlayer = function (relativeEntity, direction) {
         this.player.moveToDirection(direction);
     else {
         //console.log("there are entity here");
-        if (relativeEntity.entityType == AssetsType.diamond) {
-            this.player.moveToDirection(direction);
+        if(relativeEntity.entityType == AssetsType.diamond)
+        {
             this.eatDiamond(relativeEntity);
+            this.player.moveToDirection(direction);
             //console.log("diamond here man!");
         }
         else if (relativeEntity.entityType == AssetsType.rock) {
@@ -68,39 +69,52 @@ EntityManager.prototype.requestPlayerMove = function (direction) {
 }
 
 
-EntityManager.prototype.initEntityManager = function () {
+EntityManager.prototype.play = function ()
+{
     //return;
     var self = this;
     this.timerId = setInterval(() => {
 
         self.falling();
 
-
-    }, FrameTime * 2);
+    }, FrameTime* 2);
 }
-
 
 EntityManager.prototype.stop = function () {
     clearInterval(this.timerId);
 }
 
-EntityManager.prototype.hasEntity = function (xpos, ypos) {
-    if (this.entities[xpos] != null)
-        if (this.entities[xpos].find((value) => { value.ypos == ypos }) != undefined)
-            return true;
-        else
-            return false;
-    else
+EntityManager.prototype.hasEntity = function(xpos,ypos)
+{
+    var en = this.getEntity(xpos,ypos);
+    if(en == undefined || en == null)
         return false;
+    else
+        return true;
 }
 
 
-EntityManager.prototype.getEntity = function (xpos, ypos) {
-    if (this.entities[xpos] != null) {
-        var geten = this.entities[xpos].find(en => en.ypos == ypos);
-        //   console.log(this.entities[xpos]);
-        // console.log("get entity");
-        // console.log(geten);
+EntityManager.prototype.checkEntityType = function(xpos,ypos,entitytype)
+{
+    var en = this.getEntity(xpos,ypos);
+    if(en == undefined || en == null)
+        return false;
+    else
+        {
+            if(en.entityType == entitytype)
+                return true;
+            else
+                return false;
+        }
+}
+
+
+
+EntityManager.prototype.getEntity = function(xpos,ypos)
+{
+    if(this.entities[xpos] != undefined && this.entities[xpos] != null)
+    {
+        var geten =  this.entities[xpos].find(en => en.ypos == ypos);
         return geten;
     }
     else
@@ -114,7 +128,18 @@ EntityManager.prototype.setPlayer = function (player) {
     //this.addEntity(this.player);
 }
 
-EntityManager.prototype.addEntity = function (entity) {
+
+EntityManager.prototype.hasPlayer = function(xpos,ypos)
+{
+    if(this.player.xpos == xpos && this.player.ypos == ypos)
+        return true;
+    else
+        return false;
+}
+
+
+EntityManager.prototype.addEntity = function(entity)
+{
     this.entities[entity.xpos].unshift(entity);
 
     //this.entities[entity.xpos].sort((a, b) => { a.ypos - b.ypos })
@@ -123,29 +148,30 @@ EntityManager.prototype.addEntity = function (entity) {
 
 EntityManager.prototype.eatDiamond = function (entity) {
     var index = this.entities[entity.xpos].findIndex(en => en.ypos == entity.ypos);
-    if (index > -1) {
+    if(index > -1)
+    {
+        
+        this.player.eatCoinsSound.play();
         //console.log("to remove diamond");
         this.entities[entity.xpos].splice(index, 1);
         entity.removeEntity();
-        this.world.onEatDiamond(entity.diamondValue);
+        this.world.onEatDiamondInternal(entity.diamondValue);
 
     }
 }
 
-// EntityManager.prototype.onEntityFalling = function(entity)
-// {
-
-
-// }
 
 
 EntityManager.prototype.transferEntity = function (entity, newDx) {
     var index = this.entities[entity.xpos].findIndex(en => en.ypos == entity.ypos);
-    if (index > -1) {
-        this.entities[entity.xpos].splice(index, 1);
-        if (this.entities[newDx] != undefined && this.entities[newDx] != null) {
-            this.entities[newDx].unshift(entity);
-        }
+    if(index > -1)
+    {
+        this.entities[entity.xpos].splice(index,1);
+        if(this.entities[newDx] != undefined && this.entities[newDx] != null)
+        {
+            this.entities[newDx].push(entity);
+            this.entities[newDx].sort((a, b) => { a.ypos - b.ypos});
+        } 
 
     }
 }
@@ -154,59 +180,42 @@ EntityManager.prototype.falling = function () {
     for (let i = 0; i < this.world.width; i++) {
 
         this.entities[i].forEach((value) => {
-
-
-            var en = this.getEntity(value.xpos, value.ypos + 1);
-            if (en == undefined || en == null) {
-
+            
+            if(!this.hasEntity(value.xpos,value.ypos + 1))
+            {
                 value.moveDown();
+                console.log("move down ");
+
             }
             else {
                 value.isFalling = false;
-                // console.log("not falling");
-                // var right = this.getEntity(value.xpos + 1, value.ypos);
-                // var left = this.getEntity(value.xpos - 1, value.ypos);
-
-                // if(right == undefined || right == null)
-                // {
-
-                //     var rightTop = this.getEntity(value.xpos + 1, value.ypos - 1);
-                //     var rightDown = this.getEntity(value.xpos + 1, value.ypos + 1);
-
-                //     if((rightTop == undefined || rightTop == null) 
-                //     && (rightDown == undefined || rightDown == null))
-                //     {
-                //         this.transferEntity(value,value.xpos + 1);
-                //         value.moveRight();
-                //         value.moveDown();
-                //     }
-
-
-                // }
-                // else if(left == undefined || left == null)
-                // {
-
-                //     var leftTop = this.getEntity(value.xpos - 1, value.ypos - 1);
-                //     var leftDown = this.getEntity(value.xpos - 1, value.ypos + 1);
-
-                //     if((leftTop == undefined || leftTop == null) 
-                //         && (leftDown == undefined || leftDown == null))
-                //         {
-                //             this.transferEntity(value,value.xpos - 1);
-                //             value.moveLeft();
-                //             value.moveDown();
-                //         }
-
-
-                // }
+                console.log("not falling");
+                
+                // right
+                if(!this.hasEntity(value.xpos + 1,value.ypos) 
+                    && !this.hasPlayer(value.xpos + 1, value.ypos)
+                    && this.world.worldMap.checkTileType(value.xpos + 1,value.ypos,AssetsType.background) )
+                {
+                    if(!this.hasEntity(value.xpos + 1,value.ypos + 1) 
+                            && !this.hasPlayer(value.xpos + 1, value.ypos+1)
+                            && this.world.worldMap.checkTileType(value.xpos + 1,value.ypos + 1,AssetsType.background))
+                            value.moveRight();
+                }
+                //left
+                else if(!this.hasEntity(value.xpos - 1,value.ypos) 
+                    && !this.hasPlayer(value.xpos - 1, value.ypos)
+                    && this.world.worldMap.checkTileType(value.xpos - 1,value.ypos + 1,AssetsType.background))
+                {
+                    if(!this.hasEntity(value.xpos - 1,value.ypos + 1)
+                        && !this.hasPlayer(value.xpos - 1, value.ypos+1)
+                        && this.world.worldMap.checkTileType(value.xpos - 1,value.ypos + 1,AssetsType.background))
+                            value.moveLeft();
+                }
+                
 
 
 
             }
-        })
+        });
     }
-}
-
-EntityManager.prototype.checkCollision = function () {
-
 }

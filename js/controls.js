@@ -12,6 +12,8 @@ const keys = {
     s: "s",
     a: "a",
     d: "d",
+    p: "p",
+    P: "P",
     
 
 }
@@ -68,11 +70,16 @@ var controls = {
                 self.onKeyRight();
             }    
                 
-            else 
+            else if(e.key == keys.P|| e.key == keys.p  || e.key == keys.d) 
             {
                 console.log(e.key);
+                self.onKeyPause();
                 
             }    
+            else
+            {
+                console.log(e.key);
+            }
                 
           }
     },
@@ -92,6 +99,10 @@ var controls = {
     onKeyRight: function ()
     {
         console.log("on key right not registerd.");
+    },
+    onKeyPause: function () 
+    {
+        console.log("key pause pressed");
     },
 
     unRegisterControls: function ()

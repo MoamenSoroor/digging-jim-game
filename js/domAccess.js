@@ -62,10 +62,21 @@ var dom = {
         document.body.removeChild(im);
     },
     removeImageById: function (id) {
-        document.getElementById(id).remove();
-    }
-
-
+        var elem = document.getElementById(id);
+        if(elem){
+            elem.remove();
+        }     
+    },
+    createSound: function (src) {
+        var sound = window.document.createElement("audio");
+        sound.src = src;
+        sound.setAttribute("preload", "auto");
+        sound.setAttribute("controls", "none");
+        sound.setAttribute("muted", "false");
+        sound.style.display = "none";
+        document.body.appendChild(sound);
+        return sound;
+      }
 }
 
 
@@ -80,7 +91,9 @@ const ui =
         var id = idManager.createId(tile.xpos, tile.ypos);
         var pos = this.positionToPixels(tile);
         // console.log(pos);
-        var im = dom.createImg(tile.src, id, pos.pixelX, pos.pixelY, Tile.tileWidth, Tile.tileHeight);
+        var im = dom.createImg(tile.src, id, pos.pixelX, pos.pixelY,Tile.tileWidth, Tile.tileHeight);
+        if(tile.zindex != null && tile.zindex != undefined)
+            im.style.zIndex = tile.zindex;
         dom.addImage(im);
     },
 
