@@ -35,7 +35,7 @@ const HomeScreen = {
                 }
             }
             allScores.sort(function (a, b) {
-                return b - a;
+                return b.value - a.value;
             });
             for (var i = 0; i < allScores.length && i < 10; i++) {
                 var op = document.createElement("li");
