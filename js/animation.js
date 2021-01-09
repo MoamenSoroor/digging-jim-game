@@ -13,6 +13,7 @@ function AnimatedImage (domImage,left,top,width,height)
     this.setLeft(left);
     this.moveAnime = new AnimateMove(this);
     this.srcAnime = new AnimateSrc(this);
+    this.duringAnime = function () {}
 
     
 }
@@ -202,10 +203,12 @@ AnimateMove.prototype.playX = function(dx,durationX,onFinish){
             if(self.speedX > 0 && self.image.getLeft() < self.targetX - self.speedX)
             {
                 self.image.setLeft(self.image.getLeft() + self.speedX);
+                self.image.duringAnime(self.speedX,0);
             }
             else if (self.speedX < 0 && self.image.getLeft() > self.targetX - self.speedX)
             {
                 self.image.setLeft(self.image.getLeft() + self.speedX);
+                self.image.duringAnime(self.speedX,0);
             }
             else
             {
@@ -239,10 +242,12 @@ AnimateMove.prototype.playY = function(dy,durationY,onFinish){
             if(self.speedY > 0 && self.image.getTop() < self.targetY - self.speedY)
             {
                 self.image.setTop(self.image.getTop() + self.speedY );
+                self.image.duringAnime(0,self.speedY);
             }
             else if(self.speedY < 0 && self.image.getTop() > self.targetY - self.speedY)
             {
                 self.image.setTop(self.image.getTop() + self.speedY );
+                self.image.duringAnime(0,self.speedY);
             }
             else
             {

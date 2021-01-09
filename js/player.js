@@ -18,6 +18,41 @@ var Player  = function (world, x, y)
     this.keysRight = [Assets.getSrc(AssetsType.CharR1)];
     this.keysDown = [Assets.getSrc(AssetsType.character)];
     this.keysUp = [Assets.getSrc(AssetsType.character)];
+
+    var self = this;
+    this.image.duringAnime = function(dx,dy){
+      var px = self.image.getLeft();
+      var py = self.image.getTop();
+      var mx = 0;
+      var my = 0;
+
+      if(dx > 0)
+      {
+        if(px > window.innerWidth/2)
+          mx = dx;
+      }
+      else
+      {
+        if(self.world.width * Tile.tileWidth - px > window.innerWidth/2)
+          mx = dx;
+      }
+
+      
+      if(dy > 0)
+      {
+        if(py > window.innerHeight/2)
+          my = dy
+      }
+      else
+      {
+        if(self.world.height * Tile.tileHeight - py > window.innerHeight/2)
+          my = dy
+      }
+
+
+      window.scrollBy(mx, my);
+      //window.scrollBy(dx,dy);
+    }
 }
 
 Player.prototype = Object.create(Entity.prototype);
@@ -68,7 +103,7 @@ Player.prototype.moveUp = function(onFinish)
         Entity.prototype.moveUp.call(this,1,onFinish);
       break;
       case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);    
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);    
         Entity.prototype.moveUp.call(this,1,onFinish);   
         this.moveSound.play();
       break;
@@ -99,7 +134,7 @@ Player.prototype.moveUp = function(onFinish)
         
       break;
       case AssetsType.door:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,100);    
         Entity.prototype.moveUp.call(this,1,onFinish);
         this.world.onWinInternal();
       break;
@@ -123,7 +158,7 @@ Player.prototype.moveDown = function(onFinish)
         Entity.prototype.moveDown.call(this,1,onFinish);
       break;
       case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);     
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);     
         Entity.prototype.moveDown.call(this,1,onFinish);  
         this.moveSound.play();
       break;
@@ -153,7 +188,7 @@ Player.prototype.moveDown = function(onFinish)
         
       break;
       case AssetsType.door:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,100);    
         Entity.prototype.moveDown.call(this,1,onFinish);
         this.world.onWinInternal();
       break;
@@ -173,7 +208,7 @@ Player.prototype.moveLeft = function(onFinish)
         Entity.prototype.moveLeft.call(this,1,onFinish);
       break;
       case AssetsType.dirt:
-          this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);       
+          this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);       
           Entity.prototype.moveLeft.call(this,1,onFinish);
           this.moveSound.play();
       break;
@@ -202,7 +237,7 @@ Player.prototype.moveLeft = function(onFinish)
         
       break;
       case AssetsType.door:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,100);    
         Entity.prototype.moveLeft.call(this,1,onFinish);
         this.world.onWinInternal();
       break;
@@ -222,7 +257,7 @@ Player.prototype.moveRight = function(onFinish)
         Entity.prototype.moveRight.call(this,1,onFinish);
       break;
       case AssetsType.dirt:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,50);      
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);      
         Entity.prototype.moveRight.call(this,1,onFinish); 
         this.moveSound.play();
       break;
@@ -252,7 +287,7 @@ Player.prototype.moveRight = function(onFinish)
         
       break;
       case AssetsType.door:
-        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,50);    
+        this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.openDoor,100);    
         Entity.prototype.moveRight.call(this,1,onFinish);
         this.world.onWinInternal();
       break;

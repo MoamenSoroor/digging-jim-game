@@ -61,13 +61,13 @@ World.prototype.start = function () {
   this.controls.onKeyUp = function () {
     if (!self.isWorldStop) {
       self.entityManager.requestPlayerMove(Direction.UP);
-      self.moveScrollBar();
+      //self.moveScrollBar();
     }
   }
   this.controls.onKeyDown = function () {
     if (!self.isWorldStop) {
       self.entityManager.requestPlayerMove(Direction.DOWN);
-      self.moveScrollBar();
+      //self.moveScrollBar();
     }
   }
 
@@ -75,13 +75,13 @@ World.prototype.start = function () {
     if (!self.isWorldStop) {
 
       self.entityManager.requestPlayerMove(Direction.LEFT);
-      self.moveScrollBar();
+      //self.moveScrollBar();
     }
   }
   this.controls.onKeyRight = function () {
     if (!self.isWorldStop) {
       self.entityManager.requestPlayerMove(Direction.RIGHT);
-      self.moveScrollBar();
+      //self.moveScrollBar();
     }
   }
 
@@ -105,6 +105,9 @@ World.prototype.moveScrollBar = function () {
     window.scrollTo(tx, ty);
   }
 }
+
+
+
 // World.prototype.checkTile = function(xpos,ypos,tileType)
 // {
 //   return this.worldMap.checkTileType(xpos,ypos,tileType);
