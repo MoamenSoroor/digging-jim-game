@@ -133,41 +133,18 @@ EntityManager.prototype.falling = function () {
 
         this.entities[i].forEach((value) => {
             
-            if(!this.hasEntity(value.xpos,value.ypos + 1))
-            {
-                value.moveDown();
-                // console.log("move down ");
-
+            switch (value.entityType) {
+                case AssetsType.rock:
+                    value.fallDown();
+                    break;
+                case AssetsType.diamond:
+                    value.fallDown();
+                    break;
+        
+                default:
+                    break;
             }
-            else {
-                value.isFalling = false;
-                // console.log("not falling");
-                
-                // right
-                if(!this.hasEntity(value.xpos + 1,value.ypos) 
-                    && !this.hasPlayer(value.xpos + 1, value.ypos)
-                    && this.world.worldMap.checkTileType(value.xpos + 1,value.ypos,AssetsType.background) )
-                {
-                    if(!this.hasEntity(value.xpos + 1,value.ypos + 1) 
-                            && !this.hasPlayer(value.xpos + 1, value.ypos+1)
-                            && this.world.worldMap.checkTileType(value.xpos + 1,value.ypos + 1,AssetsType.background))
-                            value.moveRight();
-                }
-                //left
-                else if(!this.hasEntity(value.xpos - 1,value.ypos) 
-                    && !this.hasPlayer(value.xpos - 1, value.ypos)
-                    && this.world.worldMap.checkTileType(value.xpos - 1,value.ypos + 1,AssetsType.background))
-                {
-                    if(!this.hasEntity(value.xpos - 1,value.ypos + 1)
-                        && !this.hasPlayer(value.xpos - 1, value.ypos+1)
-                        && this.world.worldMap.checkTileType(value.xpos - 1,value.ypos + 1,AssetsType.background))
-                            value.moveLeft();
-                }
-                
-
-
-
-            }
+            
         });
     }
 }
