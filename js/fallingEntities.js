@@ -98,6 +98,7 @@ FallingEntity.prototype.moveRight = function()
       case AssetsType.background:
         this.world.entityManager.transferEntity(this,this.xpos + 1);
         Entity.prototype.moveRight.call(this,1);
+        console.log("falling item move to left");
       break;
     }
 }
@@ -108,40 +109,43 @@ FallingEntity.prototype.fallDown = function()
 {
 
     if(!this.world.entityManager.hasEntity(this.xpos,this.ypos + 1))
-            {
-                this.moveDown();
-                // console.log("move down ");
+    {
+        this.moveDown();
+        // console.log("move down ");
 
-            }
-            else {
-                this.isFalling = false;
-                // console.log("not falling");
-                
-                // right
-                if(!this.world.entityManager.hasEntity(this.xpos + 1,this.ypos) 
-                    && !this.world.entityManager.hasPlayer(this.xpos + 1, this.ypos)
-                    && this.world.worldMap.checkTileType(this.xpos + 1,this.ypos,AssetsType.background) )
-                {
-                    if(!this.world.entityManager.hasEntity(this.xpos + 1,this.ypos + 1) 
-                            && !this.world.entityManager.hasPlayer(this.xpos + 1, this.ypos+1)
-                            && this.world.worldMap.checkTileType(this.xpos + 1,this.ypos + 1,AssetsType.background))
-                            this.moveRight();
-                }
-                //left
-                else if(!this.world.entityManager.hasEntity(this.xpos - 1,this.ypos) 
-                    && !this.world.entityManager.hasPlayer(this.xpos - 1, this.ypos)
-                    && this.world.worldMap.checkTileType(this.xpos - 1,this.ypos + 1,AssetsType.background))
-                {
-                    if(!this.world.entityManager.hasEntity(this.xpos - 1,this.ypos + 1)
-                        && !this.world.entityManager.hasPlayer(this.xpos - 1, this.ypos+1)
-                        && this.world.worldMap.checkTileType(this.xpos - 1,this.ypos + 1,AssetsType.background))
-                            this.moveLeft();
-                }
-                
+    }
+    else {
+        this.isFalling = false;
+        // console.log("not falling");
+        
+        // right
+        if(!this.world.entityManager.hasEntity(this.xpos + 1,this.ypos) 
+            && !this.world.entityManager.hasPlayer(this.xpos + 1, this.ypos)
+            && this.world.worldMap.checkTileType(this.xpos + 1,this.ypos,AssetsType.background)
+            && !this.world.entityManager.hasEntity(this.xpos + 1,this.ypos + 1) 
+            && !this.world.entityManager.hasPlayer(this.xpos + 1, this.ypos+1)
+            && this.world.worldMap.checkTileType(this.xpos + 1,this.ypos + 1,AssetsType.background)
+          )
+          {
+            this.moveRight();
+          }
+        //left
+        else if(!this.world.entityManager.hasEntity(this.xpos - 1,this.ypos) 
+            && !this.world.entityManager.hasPlayer(this.xpos - 1, this.ypos)
+            && this.world.worldMap.checkTileType(this.xpos - 1,this.ypos + 1,AssetsType.background)
+            && !this.world.entityManager.hasEntity(this.xpos - 1,this.ypos + 1)
+            && !this.world.entityManager.hasPlayer(this.xpos - 1, this.ypos+1)
+            && this.world.worldMap.checkTileType(this.xpos - 1,this.ypos + 1,AssetsType.background)
+          )
+          {
+            this.moveLeft();
+          }
+
+        
 
 
 
-            }
+    }
 }
 
 
