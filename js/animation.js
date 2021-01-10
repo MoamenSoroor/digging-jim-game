@@ -19,6 +19,13 @@ function AnimatedImage (domImage,left,top,width,height)
 }
 
 
+AnimatedImage.prototype.setZIndex = function(value)
+{
+    this.domImage.style.zIndex = value || 0;
+}
+
+
+
 AnimatedImage.prototype.setLeft = function (val)
 {
     this.domImage.style.left = val + "px";

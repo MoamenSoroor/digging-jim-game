@@ -19,6 +19,10 @@ var Player  = function (world, x, y)
     this.keysDown = [Assets.getSrc(AssetsType.character)];
     this.keysUp = [Assets.getSrc(AssetsType.character)];
 
+    this.duration = 80;
+
+    //this.image.setZIndex(2);
+
     var self = this;
     this.image.duringAnime = function(dx,dy){
       var px = self.image.getLeft();
@@ -100,7 +104,18 @@ Player.prototype.moveUp = function(onFinish)
     switch(tile.tileType)
     {
       case AssetsType.background:
-        Entity.prototype.moveUp.call(this,1,onFinish);
+        var en = this.world.entityManager.getEntity(this.xpos,this.ypos - 1);
+        if(en == undefined && en == null)
+        {
+          Entity.prototype.moveUp.call(this,1,onFinish);  
+            
+        }
+        else if (en.entityType == AssetsType.diamond)
+        {
+          this.world.entityManager.eatDiamond(en);
+          Entity.prototype.moveUp.call(this,1,onFinish);
+            
+        }
       break;
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);    
@@ -155,7 +170,18 @@ Player.prototype.moveDown = function(onFinish)
     switch(tile.tileType)
     {
       case AssetsType.background:
-        Entity.prototype.moveDown.call(this,1,onFinish);
+        var en = this.world.entityManager.getEntity(this.xpos,this.ypos + 1);
+        if(en == undefined && en == null)
+        {
+          Entity.prototype.moveDown.call(this,1,onFinish);  
+            
+        }
+        else if (en.entityType == AssetsType.diamond)
+        {
+          this.world.entityManager.eatDiamond(en);
+          Entity.prototype.moveDown.call(this,1,onFinish);
+            
+        }
       break;
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);     
@@ -205,7 +231,18 @@ Player.prototype.moveLeft = function(onFinish)
     switch(tile.tileType)
     {
       case AssetsType.background:
-        Entity.prototype.moveLeft.call(this,1,onFinish);
+        var en = this.world.entityManager.getEntity(this.xpos - 1,this.ypos);
+        if(en == undefined && en == null)
+        {
+          Entity.prototype.moveLeft.call(this,1,onFinish);  
+            
+        }
+        else if (en.entityType == AssetsType.diamond)
+        {
+          this.world.entityManager.eatDiamond(en);
+          Entity.prototype.moveLeft.call(this,1,onFinish);
+            
+        }
       break;
       case AssetsType.dirt:
           this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);       
@@ -254,7 +291,18 @@ Player.prototype.moveRight = function(onFinish)
     switch(tile.tileType)
     {
       case AssetsType.background:
-        Entity.prototype.moveRight.call(this,1,onFinish);
+        var en = this.world.entityManager.getEntity(this.xpos + 1,this.ypos);
+        if(en == undefined && en == null)
+        {
+          Entity.prototype.moveRight.call(this,1,onFinish);  
+            
+        }
+        else if (en.entityType == AssetsType.diamond)
+        {
+          this.world.entityManager.eatDiamond(en);
+          Entity.prototype.moveRight.call(this,1,onFinish);
+            
+        }
       break;
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);      

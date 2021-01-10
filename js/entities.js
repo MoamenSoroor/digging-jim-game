@@ -44,8 +44,16 @@ Entity.prototype.drawEntity  = function (){
     dom.addImage(this.image.domImage);
 }
 
-Entity.prototype.removeEntity  = function (){
-    dom.removeImage(this.image.domImage);
+Entity.prototype.removeEntity  = function (after){
+    if(after == undefined || after == null)
+        dom.removeImage(this.image.domImage);
+    else 
+    {
+        var self = this;
+        setTimeout(function(){
+            dom.removeImage(self.image.domImage);
+        },after);
+    }
 }
 
 

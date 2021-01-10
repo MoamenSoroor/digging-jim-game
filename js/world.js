@@ -179,9 +179,6 @@ World.prototype.onEatDiamondInternal = function (value) {
 }
 
 
-
-
-
 World.prototype.onStop = function () {
   //this.game.showPausedDiv();
 }
@@ -193,10 +190,6 @@ World.prototype.onPlay = function () {
 World.prototype.onPause = function () {
   this.game.showPausedDiv();
 }
-
-
-
-
 
 
 World.prototype.onWin = function () {

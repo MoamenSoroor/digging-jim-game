@@ -14,58 +14,10 @@ var EntityManager = function (world) {
 
 }
 
-// call it when player is moved to set the logic of moving
-EntityManager.prototype.onMovingPlayer = function (relativeEntity, direction) {
-    //console.log(relativeEntity);
-    //console.log("request move player");
-    if (relativeEntity == undefined || relativeEntity == null)
-        this.player.moveToDirection(direction);
-    else {
-        //console.log("there are entity here");
-        if(relativeEntity.entityType == AssetsType.diamond)
-        {
-            this.eatDiamond(relativeEntity);
-            this.player.moveToDirection(direction);
-            //console.log("diamond here man!");
-        }
-        else if (relativeEntity.entityType == AssetsType.rock) {
-            //console.log("rock here man!");
-        }
-    }
-}
 
 
 EntityManager.prototype.requestPlayerMove = function (direction) {
-    switch (direction) {
-        case Direction.UP:
-            var en = this.getEntity(this.player.xpos, this.player.ypos - 1)
-            this.onMovingPlayer(en, direction);
-
-            break;
-
-        case Direction.DOWN:
-            // DOWN logic here 
-            var en = this.getEntity(this.player.xpos, this.player.ypos + 1);
-            this.onMovingPlayer(en, direction);
-
-            break;
-
-        case Direction.LEFT:
-            // LEFT logic here 
-            var en = this.getEntity(this.player.xpos - 1, this.player.ypos)
-            this.onMovingPlayer(en, direction);
-
-            break;
-
-        case Direction.RIGHT:
-            // RIGHT logic here
-            var en = this.getEntity(this.player.xpos + 1, this.player.ypos);
-            this.onMovingPlayer(en, direction);
-            break;
-
-
-    }
-
+    this.player.moveToDirection(direction);
 }
 
 
@@ -154,7 +106,7 @@ EntityManager.prototype.eatDiamond = function (entity) {
         this.player.eatCoinsSound.play();
         //console.log("to remove diamond");
         this.entities[entity.xpos].splice(index, 1);
-        entity.removeEntity();
+        entity.removeEntity(50);
         this.world.onEatDiamondInternal(entity.diamondValue);
 
     }
