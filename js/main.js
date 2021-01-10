@@ -5,5 +5,5 @@ Tile.tileWidth = 50;
 Tile.tileHeight = 50;
 
 
-var game = new Game([mapArray, secondMapArray, thirdMapArray]);
+var game = new Game([fourthMapArray, mapArray, secondMapArray, thirdMapArray]);
 game.showHomeScreen();
