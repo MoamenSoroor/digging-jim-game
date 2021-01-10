@@ -63,13 +63,16 @@
             z-index: 10;
         }
 
-        /* img {
-            position: absolute;
-            vertical-align: bottom;
-        } */
-
+        /* Disable scrollbar Chrom */
         ::-webkit-scrollbar {
             display: none;
+        }
+
+        @-moz-document url-prefix() {
+            /* Disable scrollbar Firefox */
+            html {
+                scrollbar-width: none;
+            }
         }
     </style>
 </head>
