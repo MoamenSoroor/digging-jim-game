@@ -5,7 +5,10 @@ const HomeScreen = {
         window.onbeforeunload = function () {
             window.scrollTo(0, 0);
         }
-
+        document.addEventListener("DOMMouseScroll", function (eve) {
+            eve.preventDefault();
+        }, { passive: false });
+        
         document.addEventListener("mousewheel", function (eve) {
             eve.preventDefault();
         }, { passive: false });
