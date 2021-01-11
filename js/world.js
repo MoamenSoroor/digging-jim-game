@@ -92,6 +92,10 @@ World.prototype.start = function () {
       self.pause();
   }
 
+  this.controls.onKeyESC = function () {
+    self.onFailInternal();
+  }
+
 }
 
 
@@ -149,6 +153,7 @@ World.prototype.onFailInternal = function () {
   var e6 = this.entityManager.getEntity(this.player.xpos + 1, this.player.ypos + 1)
   var e7 = this.entityManager.getEntity(this.player.xpos, this.player.ypos - 1)
   var e8 = this.entityManager.getEntity(this.player.xpos, this.player.ypos + 1)
+  var e9 = this.entityManager.getEntity(this.player.xpos, this.player.ypos)
 
 
   if (e1 != null) e1.removeEntity();
@@ -159,10 +164,14 @@ World.prototype.onFailInternal = function () {
   if (e6 != null) e6.removeEntity();
   if (e7 != null) e7.removeEntity();
   if (e8 != null) e8.removeEntity();
+  if (e9 != null) e9.removeEntity();
 
-  dom.addImage(dom.createImg(Assets.getSrc(AssetsType.lose), "lose",
-    Entity.toPixelX(this.player.xpos - 1),
-    Entity.toPixelX(this.player.ypos - 1), Entity.width * 3, Entity.height * 3));
+  var im = dom.createImg(Assets.getSrc(AssetsType.lose), "lose",
+  Entity.toPixelX(this.player.xpos - 1),
+  Entity.toPixelX(this.player.ypos - 1), Entity.width * 3, Entity.height * 3);
+  im.style.zIndex = 3;
+
+  dom.addImage(im);
 
   this.player.removeEntity();
 

@@ -51,7 +51,13 @@ WorldMap.prototype.drawWorldMap = function (world) {
           diamond.drawEntity();
           world.entityManager.addEntity(diamond);
           break;
-
+        case AssetsType.bomb:
+          ui.createTile(new Tile(j, i, AssetsType.background));
+          this.map[i][j] = AssetsType.background;
+          var bomb = new Bomb(world, j, i);
+          bomb.drawEntity();
+          world.entityManager.addEntity(bomb);
+          break;
 
         default:
           //console.log("asset type " + this.map[i][j]);

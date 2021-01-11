@@ -98,7 +98,6 @@ FallingEntity.prototype.moveRight = function()
       case AssetsType.background:
         this.world.entityManager.transferEntity(this,this.xpos + 1);
         Entity.prototype.moveRight.call(this,1);
-        console.log("falling item move to left");
       break;
     }
 }
@@ -175,3 +174,14 @@ Diamond.prototype = Object.create(FallingEntity.prototype);
 
 Diamond.prototype.constructor = Diamond.constructor;
 
+
+
+var Bomb  = function (world, x, y)
+{
+    FallingEntity.call(this,world,x,y,"bomb" + x + "-" + y,AssetsType.bomb);
+    this.fallingSound = new Sound(SoundSrc.rockFalling);
+}
+
+Bomb.prototype = Object.create(FallingEntity.prototype);
+
+Bomb.prototype.constructor = Bomb.constructor;

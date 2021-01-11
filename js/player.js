@@ -116,6 +116,11 @@ Player.prototype.moveUp = function(onFinish)
           Entity.prototype.moveUp.call(this,1,onFinish);
             
         }
+        else if (en.entityType == AssetsType.bomb)
+        {
+          this.world.onFailInternal();
+            
+        }
       break;
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);    
@@ -143,6 +148,15 @@ Player.prototype.moveUp = function(onFinish)
                 Entity.prototype.moveUp.call(this,2,onFinish);   
                 this.world.worldMap.updateTileTo(tile.xpos,tile.ypos - 1,AssetsType.background,100);    
                 this.tubeSound.play();
+            }
+            else if (en.entityType == AssetsType.bomb)
+            {
+              Entity.prototype.moveUp.call(this,2,()=>{
+                //en.removeEntity();
+                this.world.onFailInternal();
+              });   
+              this.tubeSound.play();
+                
             }
             
         }
@@ -182,6 +196,11 @@ Player.prototype.moveDown = function(onFinish)
           Entity.prototype.moveDown.call(this,1,onFinish);
             
         }
+        else if (en.entityType == AssetsType.bomb)
+        {
+          this.world.onFailInternal();
+            
+        }
       break;
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);     
@@ -208,6 +227,14 @@ Player.prototype.moveDown = function(onFinish)
                 this.world.entityManager.eatDiamond(en);
                 Entity.prototype.moveDown.call(this,2,onFinish);   
                 this.tubeSound.play();
+            }
+            else if (en.entityType == AssetsType.bomb)
+            {
+              Entity.prototype.moveDown.call(this,2,()=>{
+                this.world.onFailInternal();
+              });   
+              this.tubeSound.play();
+                
             }
             
         }
@@ -243,6 +270,11 @@ Player.prototype.moveLeft = function(onFinish)
           Entity.prototype.moveLeft.call(this,1,onFinish);
             
         }
+        else if (en.entityType == AssetsType.bomb)
+        {
+          this.world.onFailInternal();
+            
+        }
       break;
       case AssetsType.dirt:
           this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);       
@@ -268,6 +300,14 @@ Player.prototype.moveLeft = function(onFinish)
                 this.world.entityManager.eatDiamond(en);
                 Entity.prototype.moveLeft.call(this,2,onFinish);   
                 this.tubeSound.play();
+            }
+            else if (en.entityType == AssetsType.bomb)
+            {
+              Entity.prototype.moveLeft.call(this,2,()=>{
+                this.world.onFailInternal();
+              });   
+              this.tubeSound.play();
+                
             }
             
         }
@@ -303,6 +343,11 @@ Player.prototype.moveRight = function(onFinish)
           Entity.prototype.moveRight.call(this,1,onFinish);
             
         }
+        else if (en.entityType == AssetsType.bomb)
+        {
+          this.world.onFailInternal();
+            
+        }
       break;
       case AssetsType.dirt:
         this.world.worldMap.updateTileTo(tile.xpos,tile.ypos,AssetsType.background,100);      
@@ -329,6 +374,15 @@ Player.prototype.moveRight = function(onFinish)
                 this.world.entityManager.eatDiamond(en,Direction.RIGHT);
                 Entity.prototype.moveRight.call(this,2,onFinish);   
                 this.tubeSound.play();
+            }
+            else if (en.entityType == AssetsType.bomb)
+            {
+              Entity.prototype.moveRight.call(this,2,()=>{
+                this.world.onFailInternal();
+              });   
+              this.tubeSound.play();
+              
+                
             }
             
         }

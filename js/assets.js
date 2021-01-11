@@ -25,6 +25,7 @@ const AssetsType = {
   lose: 10,
   tubeUD: 11, // up down tube
   tubeLF: 12, // left right tube
+  bomb: 13,
 };
 
 
@@ -42,6 +43,7 @@ const AssetsSrc = {
   10: "resources/images/lose.gif",
   11: "resources/images/tube1.png",
   12: "resources/images/tube1LR.png",
+  13: "resources/images/bomb.gif",
 
   "resources/images/black.png": 0,
   "resources/images/dirtback.gif": 1,
@@ -56,6 +58,7 @@ const AssetsSrc = {
   "resources/images/lose.gif": 10,
   "resources/images/tube1.png": 11,
   "resources/images/tube1LR.png": 12,
+  "resources/images/bomb.gif": 13,
 };
 
 

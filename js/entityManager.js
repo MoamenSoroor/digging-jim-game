@@ -140,6 +140,9 @@ EntityManager.prototype.falling = function () {
                 case AssetsType.diamond:
                     value.fallDown();
                     break;
+                case AssetsType.bomb:
+                    value.fallDown();
+                    break;
         
                 default:
                     break;

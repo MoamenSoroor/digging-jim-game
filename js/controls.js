@@ -14,6 +14,7 @@ const keys = {
     d: "d",
     p: "p",
     P: "P",
+    ESC: "Escape",
     
 
 }
@@ -76,9 +77,15 @@ var controls = {
                 self.onKeyPause();
                 
             }    
+            else if(e.key == keys.ESC) 
+            {
+                // console.log(e.key);
+                self.onKeyESC();
+                
+            }  
             else
             {
-                //console.log(e.key);
+                console.log(e.key);
             }
                 
           }
@@ -103,6 +110,10 @@ var controls = {
     onKeyPause: function () 
     {
         //console.log("key pause pressed");
+    },
+    onKeyESC: function () 
+    {
+        console.log("key ESC pressed");
     },
 
     unRegisterControls: function ()
