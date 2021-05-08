@@ -1,4 +1,5 @@
 # Digging Jim Game
-Digging Jim game reamake using HTML and JS
 
-![Alt Text](https://i.ibb.co/cvL1PjB/digging-jim.gif)
+Digging Jim game remake using HTML and JS
+
+<img src="/Demo.gif?raw=true">
